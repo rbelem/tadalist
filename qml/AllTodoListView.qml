@@ -12,7 +12,7 @@ Item {
         anchors.right: parent.right
 
         ListView {
-            id: todoListView
+            id: allTodoListView
 
             anchors.fill: parent
         }
