@@ -30,7 +30,10 @@ ApplicationWindow {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: stackView.pop()
+                onClicked: {
+                    stackView.pop()
+                    todoListTextId.opacity = 0
+                }
             }
         }
 
@@ -39,6 +42,7 @@ ApplicationWindow {
             anchors.verticalCenter: myListTextId.verticalCenter
             anchors.left: myListTextId.right
             anchors.leftMargin: 30
+            opacity: 0
             text: qsTr("Todo List")
             font.pixelSize: 20
 

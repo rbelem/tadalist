@@ -40,7 +40,18 @@ Item {
                 id: allDoneListView
 
                 model: FakeListModel {}
-                delegate: Text { text: name + "," }
+                delegate: Text {
+                    text: name + ","
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            stackView.push({item: todoListView, properties: {name: name}})
+                            todoListTextId.text = name
+                            todoListTextId.opacity = 1.0
+                        }
+                    }
+                }
             }
         }
     }
