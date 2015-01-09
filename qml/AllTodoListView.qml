@@ -10,6 +10,7 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
+        anchors.bottom: doneListItem.top
 
         ListView {
             id: allTodoListView
@@ -20,14 +21,27 @@ Item {
         }
     }
 
-    ScrollView {
-        anchors.top: todoListScrollView.bottom
+    Item {
+        id: doneListItem
+
         anchors.left: parent.left
         anchors.right: parent.right
-    }
+        anchors.bottom: parent.bottom
 
-    Rectangle {
-        anchors.fill: parent
-        color: "blue"
+        height: 100
+
+        Flow {
+            anchors.fill: parent
+            anchors.topMargin: 10
+            anchors.margins: 4
+            spacing: 5
+
+            Repeater {
+                id: allDoneListView
+
+                model: FakeListModel {}
+                delegate: Text { text: name + "," }
+            }
+        }
     }
 }
