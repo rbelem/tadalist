@@ -15,6 +15,8 @@ Item {
             id: allTodoListView
 
             anchors.fill: parent
+            model: FakeListModel {}
+            delegate: AllTodoListDelegate {}
         }
     }
 
