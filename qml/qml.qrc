@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>AllTodoListView.qml</file>
+        <file>TodoListView.qml</file>
+    </qresource>
+</RCC>
