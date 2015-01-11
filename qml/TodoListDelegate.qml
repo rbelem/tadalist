@@ -28,6 +28,11 @@ Component {
             anchors.leftMargin: 10
             anchors.verticalCenter: dot.verticalCenter
             text: name
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: onTodoListClicked(name)
+            }
         }
 
         Text {

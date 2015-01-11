@@ -4,6 +4,12 @@ import QtQuick.Controls 1.1
 
 Item {
 
+    function onTodoListClicked(name) {
+        stackView.push({item: taskListView, properties: {name: name}})
+        todoListTextId.text = name
+        todoListTextId.opacity = 1.0
+    }
+
     ScrollView {
         id: todoListScrollView
 
@@ -45,11 +51,7 @@ Item {
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: {
-                            stackView.push({item: taskListView, properties: {name: name}})
-                            todoListTextId.text = name
-                            todoListTextId.opacity = 1.0
-                        }
+                        onClicked: onTodoListClicked(name)
                     }
                 }
             }
