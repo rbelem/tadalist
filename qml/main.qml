@@ -45,13 +45,6 @@ ApplicationWindow {
             opacity: 0
             text: qsTr("Todo List")
             font.pixelSize: 20
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    stackView.push({item: todoListView, properties: {name: "ToDo List Name"}})
-                }
-            }
         }
     }
 
