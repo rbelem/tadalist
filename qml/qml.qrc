@@ -1,9 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file>AllTodoListDelegate.qml</file>
-        <file>AllTodoListView.qml</file>
-        <file>FakeListModel.qml</file>
         <file>main.qml</file>
-        <file>TodoListView.qml</file>
+        <file>TadaListView.qml</file>
+        <file>TaskListView.qml</file>
+        <file>TodoListDelegate.qml</file>
+        <file>TodoListModel.qml</file>
     </qresource>
 </RCC>

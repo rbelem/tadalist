@@ -8,9 +8,9 @@ ApplicationWindow {
     height: 480
     visible: true
 
-    property Component allTodoListView: AllTodoListView {}
+    property Component allTodoListView: TadaListView {}
 
-    property Component todoListView: TodoListView {}
+    property Component taskListView: TaskListView {}
 
     toolBar: Rectangle {
         color: "#ffffff"

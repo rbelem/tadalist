@@ -10,19 +10,19 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.bottom: doneListItem.top
+        anchors.bottom: completedListItem.top
 
         ListView {
-            id: allTodoListView
+            id: todoListView
 
             anchors.fill: parent
-            model: FakeListModel {}
-            delegate: AllTodoListDelegate {}
+            model: TodoListModel {}
+            delegate: TodoListDelegate {}
         }
     }
 
     Item {
-        id: doneListItem
+        id: completedListItem
 
         anchors.left: parent.left
         anchors.right: parent.right
@@ -37,16 +37,16 @@ Item {
             spacing: 5
 
             Repeater {
-                id: allDoneListView
+                id: completedListRepeater
 
-                model: FakeListModel {}
+                model: TodoListModel {}
                 delegate: Text {
                     text: name + ","
 
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            stackView.push({item: todoListView, properties: {name: name}})
+                            stackView.push({item: taskListView, properties: {name: name}})
                             todoListTextId.text = name
                             todoListTextId.opacity = 1.0
                         }
