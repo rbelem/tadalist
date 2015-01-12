@@ -4,30 +4,16 @@ import QtQuick.Controls 1.1
 
 Item {
 
-    property string name: ""
-
     ScrollView {
-        id: todoListScrollView
 
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors.fill: parent
 
         ListView {
-            id: todoListView
+            id: listView
 
             anchors.fill: parent
+            model: TaskListModel {}
+            delegate: TaskListDelegate {}
         }
-    }
-
-    ScrollView {
-        anchors.top: todoListScrollView.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "cyan"
     }
 }

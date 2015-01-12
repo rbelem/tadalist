@@ -2,6 +2,8 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>TadaListView.qml</file>
+        <file>TaskListDelegate.qml</file>
+        <file>TaskListModel.qml</file>
         <file>TaskListView.qml</file>
         <file>TodoListDelegate.qml</file>
         <file>TodoListModel.qml</file>
