@@ -2,7 +2,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 
-Item {
+Rectangle {
 
     function onTodoListClicked(name) {
         stackView.push({item: taskListView, properties: {name: name}})
@@ -22,24 +22,40 @@ Item {
             id: todoListView
 
             anchors.fill: parent
+            anchors.leftMargin: 10
             model: TodoListModel {}
             delegate: TodoListDelegate {}
         }
     }
 
-    Item {
+    Rectangle {
         id: completedListItem
 
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        height: 100
+        height: 70
+
+        Text {
+            id: completedListText
+
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            anchors.top: parent.top
+            anchors.topMargin: 10
+
+            text: qsTr("Completed lists:")
+            font.pixelSize: 9
+        }
 
         Flow {
-            anchors.fill: parent
+            anchors.top: parent.top
             anchors.topMargin: 10
-            anchors.margins: 4
+            anchors.left: completedListText.right
+            anchors.leftMargin: 5
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
             spacing: 5
 
             Repeater {
@@ -48,6 +64,9 @@ Item {
                 model: TodoListModel {}
                 delegate: Text {
                     text: name + ","
+                    color: "#03c"
+                    font.pixelSize: 9
+                    font.underline: true
 
                     MouseArea {
                         anchors.fill: parent

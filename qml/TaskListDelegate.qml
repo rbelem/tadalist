@@ -61,6 +61,8 @@ MouseArea {
             anchors.leftMargin: 1
             anchors.verticalCenter: checkbox.verticalCenter
             text: name
+
+            font.pixelSize: 16
         }
     }
 

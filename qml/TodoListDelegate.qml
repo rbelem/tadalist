@@ -29,6 +29,12 @@ Component {
             anchors.verticalCenter: dot.verticalCenter
             text: name
 
+            color: "#03c"
+            font.family: "Lucinda Grande"
+            font.pixelSize: 16
+            font.weight: Font.Bold
+            font.underline: true
+
             MouseArea {
                 anchors.fill: parent
                 onClicked: onTodoListClicked(name)
@@ -40,7 +46,7 @@ Component {
             anchors.left: todoListName.right
             anchors.leftMargin: 10
             anchors.verticalCenter: todoListName.verticalCenter
-            text: "- " + lefting + " left"
+            text: "—  " + lefting + " left"
         }
     }
 }
