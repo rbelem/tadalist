@@ -13,6 +13,7 @@ SOURCES += \
     main.cpp
 
 RESOURCES += \
+    ../images/images.qrc \
     ../qml/qml.qrc
 
 

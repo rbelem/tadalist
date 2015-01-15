@@ -13,38 +13,125 @@ ApplicationWindow {
     property Component taskListView: TaskListView {}
 
     toolBar: Rectangle {
+        id: tadaListToolBar
         color: "#ffffff"
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
 
-        height: 50
+        height: 70
 
-        Text {
-            id: myListTextId
+        state: "tadaListScreen"
+
+        states: [
+            State {
+                name: "tadaListScreen"
+                PropertyChanges { target: myListTextIdMouseArea; enabled: false }
+                PropertyChanges { target: sep; opacity: 0 }
+                PropertyChanges { target: todoListTextId; opacity: 0; enabled: false }
+                PropertyChanges { target: newListText; opacity: 1; enabled: true }
+                PropertyChanges { target: newTaskText; opacity: 0; enabled: false }
+                PropertyChanges { target: tadaListInnerToolBar; width: 300 }
+            },
+            State {
+                name: "taskListScreen"
+                PropertyChanges { target: myListTextIdMouseArea; enabled: true }
+                PropertyChanges { target: sep; opacity: 1 }
+                PropertyChanges { target: todoListTextId; opacity: 1; enabled: true }
+                PropertyChanges { target: newListText; opacity: 0; enabled: false }
+                PropertyChanges { target: newTaskText; opacity: 1; enabled: true }
+                PropertyChanges { target: tadaListInnerToolBar;
+                    width: myListTextId.width + sep.width + todoListTextId.width
+                            + newTaskText.width + 100 }
+            }
+        ]
+
+        Image {
+            id: tadaListLogo
+
+            z: 1
             anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
-            anchors.leftMargin: 30
-            text: qsTr("My List")
-            font.pixelSize: 20
+            anchors.leftMargin: 10
 
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    stackView.pop()
-                    todoListTextId.opacity = 0
-                }
-            }
+            source: "tada-mark-bg.gif"
         }
 
-        Text {
-            id: todoListTextId
-            anchors.verticalCenter: myListTextId.verticalCenter
-            anchors.left: myListTextId.right
-            anchors.leftMargin: 30
-            opacity: 0
-            text: qsTr("Todo List")
-            font.pixelSize: 20
+        Rectangle {
+            id: tadaListInnerToolBar
+            anchors.left: tadaListLogo.right
+            anchors.leftMargin: -15
+            anchors.bottom: tadaListLogo.bottom
+            anchors.bottomMargin: 2
+
+            height: 39
+            width: 300
+            radius: 20
+            color: "#efefef"
+
+            Text {
+                id: myListTextId
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 24
+                text: qsTr("My List")
+                font.pixelSize: 23
+                font.family: "Arial"
+                font.weight: Font.Bold
+
+                MouseArea {
+                    id: myListTextIdMouseArea
+                    anchors.fill: parent
+                    onClicked: {
+                        stackView.pop()
+                        tadaListToolBar.state = "tadaListScreen"
+                    }
+                }
+            }
+
+            Text {
+                id: sep
+                anchors.verticalCenter: myListTextId.verticalCenter
+                anchors.left: myListTextId.right
+                anchors.leftMargin: 5
+                text: "/"
+                font.pixelSize: 23
+            }
+
+            Text {
+                id: todoListTextId
+                anchors.verticalCenter: sep.verticalCenter
+                anchors.left: sep.right
+                anchors.leftMargin: 5
+                text: qsTr("Todo List Name")
+                font.pixelSize: 23
+            }
+
+            Text {
+                id: newListText
+                anchors.left: myListTextId.right
+                anchors.leftMargin: 12
+                anchors.bottom: myListTextId.bottom
+                anchors.bottomMargin: 2
+                text: qsTr("Create a new list")
+                color: "#f00"
+                font.family: "Verdana"
+                font.pixelSize: 10
+                font.underline: true
+            }
+
+            Text {
+                id: newTaskText
+                anchors.left: todoListTextId.right
+                anchors.leftMargin: 12
+                anchors.bottom: myListTextId.bottom
+                anchors.bottomMargin: 2
+                text: qsTr("Add another item")
+                color: "#f00"
+                font.family: "Verdana"
+                font.pixelSize: 10
+                font.underline: true
+            }
         }
     }
 

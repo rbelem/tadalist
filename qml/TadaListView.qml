@@ -6,8 +6,8 @@ Item {
 
     function onTodoListClicked(name) {
         stackView.push({item: taskListView, properties: {name: name}})
+        tadaListToolBar.state = "taskListScreen"
         todoListTextId.text = name
-        todoListTextId.opacity = 1.0
     }
 
     ScrollView {
