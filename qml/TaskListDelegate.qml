@@ -40,20 +40,24 @@ MouseArea {
                 }
 
                 AnchorChanges {
-                    target: taskItem;
-                    anchors.horizontalCenter: undefined;
+                    target: taskItem
+                    anchors.horizontalCenter: undefined
                     anchors.verticalCenter: undefined
                 }
             },
             State {
                 name: "DragActive"
-                PropertyChanges { target: dragImage; visible: true;  }
+                PropertyChanges { target: dragImage; visible: true  }
                 AnchorChanges { target: checkbox; anchors.left: dragImage.right }
+                PropertyChanges { target: mouseArea; enabled: true  }
+                PropertyChanges { target: checkbox; enabled: false  }
             },
             State {
                 name: "DragInactive"
-                PropertyChanges { target: dragImage; visible: false;  }
-                AnchorChanges { target: checkbox; anchors.left: parent.left}
+                PropertyChanges { target: dragImage; visible: false  }
+                AnchorChanges { target: checkbox; anchors.left: parent.left }
+                PropertyChanges { target: mouseArea; enabled: false  }
+                PropertyChanges { target: checkbox; enabled: true  }
             }
         ]
 
@@ -91,5 +95,13 @@ MouseArea {
         anchors.fill: parent
         anchors.margins: 7
         onEntered: delegateModel.items.move(drag.source.taskIndex, mouseArea.taskIndex)
+        onDropped: console.log("dropped")
+        onPositionChanged: {
+            mouseArea.state = "DragActive"
+            dragImage.visible = true
+            checkbox.anchors.left = dragImage.right
+            mouseArea.enabled = true
+            checkbox.enabled = false
+        }
     }
 }
