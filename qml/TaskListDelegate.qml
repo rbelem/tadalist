@@ -29,6 +29,8 @@ MouseArea {
         Drag.hotSpot.x: 15
         Drag.hotSpot.y: 15
 
+        state: reorderState
+
         states: [
             State {
                 when: taskItem.Drag.active
@@ -42,8 +44,27 @@ MouseArea {
                     anchors.horizontalCenter: undefined;
                     anchors.verticalCenter: undefined
                 }
+            },
+            State {
+                name: "DragActive"
+                PropertyChanges { target: dragImage; visible: true;  }
+                AnchorChanges { target: checkbox; anchors.left: dragImage.right }
+            },
+            State {
+                name: "DragInactive"
+                PropertyChanges { target: dragImage; visible: false;  }
+                AnchorChanges { target: checkbox; anchors.left: parent.left}
             }
         ]
+
+        Image {
+            id: dragImage
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            anchors.verticalCenter: parent.verticalCenter
+            visible: false
+            source: "drag.gif"
+        }
 
         CheckBox {
             id: checkbox

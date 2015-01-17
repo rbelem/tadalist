@@ -9,7 +9,6 @@ ApplicationWindow {
     visible: true
 
     property Component allTodoListView: TadaListView {}
-
     property Component taskListView: TaskListView {}
 
     toolBar: Rectangle {
@@ -31,6 +30,8 @@ ApplicationWindow {
                 PropertyChanges { target: todoListTextId; opacity: 0; enabled: false }
                 PropertyChanges { target: newListText; opacity: 1; enabled: true }
                 PropertyChanges { target: newTaskText; opacity: 0; enabled: false }
+                PropertyChanges { target: optionsSep; opacity: 0; enabled: false }
+                PropertyChanges { target: reorderText; opacity: 0; enabled: false }
                 PropertyChanges { target: tadaListInnerToolBar; width: 300 }
             },
             State {
@@ -40,9 +41,11 @@ ApplicationWindow {
                 PropertyChanges { target: todoListTextId; opacity: 1; enabled: true }
                 PropertyChanges { target: newListText; opacity: 0; enabled: false }
                 PropertyChanges { target: newTaskText; opacity: 1; enabled: true }
+                PropertyChanges { target: optionsSep; opacity: 1; enabled: true }
+                PropertyChanges { target: reorderText; opacity: 1; enabled: true }
                 PropertyChanges { target: tadaListInnerToolBar;
                     width: myListTextId.width + sep.width + todoListTextId.width
-                            + newTaskText.width + 100 }
+                            + newTaskText.width + optionsSep.width + reorderText.width + 100 }
             }
         ]
 
@@ -131,6 +134,36 @@ ApplicationWindow {
                 font.family: "Verdana"
                 font.pixelSize: 10
                 font.underline: true
+            }
+
+            Text {
+                id: optionsSep
+                anchors.left: newTaskText.right
+                anchors.leftMargin: 3
+                anchors.bottom: myListTextId.bottom
+                anchors.bottomMargin: 2
+                text: "|"
+                color: "#000000"
+                font.family: "Verdana"
+                font.pixelSize: 10
+            }
+
+            Text {
+                id: reorderText
+                anchors.left: optionsSep.right
+                anchors.leftMargin: 3
+                anchors.bottom: myListTextId.bottom
+                anchors.bottomMargin: 2
+                text: qsTr("Reorder")
+                color: "#f00"
+                font.family: "Verdana"
+                font.pixelSize: 10
+                font.underline: true
+
+                MouseArea {
+                    id: reorderMouseArea
+                    anchors.fill: parent
+                }
             }
         }
     }
