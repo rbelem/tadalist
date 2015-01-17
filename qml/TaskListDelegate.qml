@@ -46,6 +46,10 @@ MouseArea {
                 }
             },
             State {
+                when: checkbox.checked
+                PropertyChanges { target: taskName; font.pixelSize: 10; color: "#999" }
+            },
+            State {
                 name: "DragActive"
                 PropertyChanges { target: dragImage; visible: true  }
                 AnchorChanges { target: checkbox; anchors.left: dragImage.right }
