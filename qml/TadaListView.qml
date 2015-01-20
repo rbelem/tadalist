@@ -23,7 +23,7 @@ Rectangle {
 
             anchors.fill: parent
             anchors.leftMargin: 10
-            model: TodoListModel {}
+            model: tadaListModel
             delegate: TodoListDelegate {}
         }
     }

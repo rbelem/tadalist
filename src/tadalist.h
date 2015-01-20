@@ -6,6 +6,7 @@
 
 class QQmlComponent;
 class QQmlContext;
+class TadaListModel;
 
 class TadaList : public QQmlEngine
 {
@@ -21,6 +22,8 @@ public slots:
 private:
     QQmlContext *m_context;
     QQmlComponent *m_component;
+
+    TadaListModel *m_tadaListModel;
 };
 
 #endif
