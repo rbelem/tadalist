@@ -6,11 +6,19 @@ QT += \
     quick
 
 HEADERS += \
-    tadalist.h
+    tadalist.h \
+    tadalistitem.h \
+    tadalistmodel.h \
+    taskitem.h \
+    tasklistmodel.h
 
 SOURCES += \
+    main.cpp \
     tadalist.cpp \
-    main.cpp
+    tadalistitem.cpp \
+    tadalistmodel.cpp \
+    taskitem.cpp \
+    tasklistmodel.cpp
 
 RESOURCES += \
     ../images/images.qrc \
