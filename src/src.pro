@@ -10,7 +10,8 @@ HEADERS += \
     tadalistitem.h \
     tadalistmodel.h \
     taskitem.h \
-    tasklistmodel.h
+    tasklistmodel.h \
+    tasklistmodelproxy.h
 
 SOURCES += \
     main.cpp \
@@ -18,7 +19,8 @@ SOURCES += \
     tadalistitem.cpp \
     tadalistmodel.cpp \
     taskitem.cpp \
-    tasklistmodel.cpp
+    tasklistmodel.cpp \
+    tasklistmodelproxy.cpp
 
 RESOURCES += \
     ../images/images.qrc \
