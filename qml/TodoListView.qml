@@ -6,7 +6,7 @@ Rectangle {
 
     function onTodoListClicked(id, name, description) {
         taskListModelProxy.setTodoListId(id)
-        stackView.push({item: taskListView, properties: {name: name}})
+        stackView.push({item: taskListView, properties: {}})
         todoListToolBar.state = "taskListScreen"
         todoListTextId.text = name
     }

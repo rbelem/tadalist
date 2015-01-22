@@ -8,6 +8,7 @@ class TodoListItem;
 class TodoListModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_ENUMS(TodoItemRoles)
 
 public:
     enum TodoItemRoles {
@@ -21,7 +22,8 @@ public:
     TodoListModel(QObject * parent = 0);
     ~TodoListModel();
 
-    Q_INVOKABLE int addItem(const QString &name);
+    Q_INVOKABLE TodoListItem *addItem();
+    Q_INVOKABLE void updateItem(int id, int role, const QVariant &value);
 
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const;

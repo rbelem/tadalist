@@ -7,6 +7,7 @@
 #include <QtQml/QQmlContext>
 #include <QtQuick/QQuickWindow>
 
+#include "todolistitem.h"
 #include "todolistmodel.h"
 #include "tasklistmodel.h"
 #include "tasklistmodelproxy.h"
@@ -21,6 +22,9 @@ TadaList::TadaList(QObject *parent)
 {
     QCoreApplication *app = QCoreApplication::instance();
     connect(app, SIGNAL(aboutToQuit()), SLOT(onQuit()));
+
+    qmlRegisterType<TodoListItem>("com.ics.tadalist", 0, 1, "TodoListItem");
+    qmlRegisterType<TodoListModel>("com.ics.tadalist", 0, 1, "TodoListModel");
 
     m_taskListModelProxy->setSourceModel(m_taskListModel);
 

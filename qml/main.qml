@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
+import com.ics.tadalist 0.1
 
 ApplicationWindow {
     id: mainWindow
@@ -13,6 +14,9 @@ ApplicationWindow {
 
     toolBar: Rectangle {
         id: todoListToolBar
+
+        property int currentTodoListId: -1
+
         color: "#ffffff"
         anchors.top: parent.top
         anchors.left: parent.left
@@ -27,6 +31,7 @@ ApplicationWindow {
                 name: "todoListScreen"
                 PropertyChanges { target: myListTextIdMouseArea; enabled: false }
                 PropertyChanges { target: sep; opacity: 0 }
+                PropertyChanges { target: todoListTextField; opacity: 0; enabled: false }
                 PropertyChanges { target: todoListTextId; opacity: 0; enabled: false }
                 PropertyChanges { target: newListText; opacity: 1; enabled: true }
                 PropertyChanges { target: newTaskText; opacity: 0; enabled: false }
@@ -38,11 +43,26 @@ ApplicationWindow {
                 name: "taskListScreen"
                 PropertyChanges { target: myListTextIdMouseArea; enabled: true }
                 PropertyChanges { target: sep; opacity: 1 }
+                PropertyChanges { target: todoListTextField; opacity: 0; enabled: false }
                 PropertyChanges { target: todoListTextId; opacity: 1; enabled: true }
                 PropertyChanges { target: newListText; opacity: 0; enabled: false }
                 PropertyChanges { target: newTaskText; opacity: 1; enabled: true }
                 PropertyChanges { target: optionsSep; opacity: 1; enabled: true }
                 PropertyChanges { target: reorderText; opacity: 1; enabled: true }
+                PropertyChanges { target: todoListInnerToolBar;
+                    width: myListTextId.width + sep.width + todoListTextId.width
+                            + newTaskText.width + optionsSep.width + reorderText.width + 100 }
+            },
+            State {
+                name: "taskListScreenNameEdit"
+                PropertyChanges { target: myListTextIdMouseArea; enabled: false }
+                PropertyChanges { target: sep; opacity: 1 }
+                PropertyChanges { target: todoListTextField; opacity: 1; enabled: true }
+                PropertyChanges { target: todoListTextId; opacity: 0; enabled: false }
+                PropertyChanges { target: newListText; opacity: 0; enabled: false }
+                PropertyChanges { target: newTaskText; opacity: 0; enabled: false }
+                PropertyChanges { target: optionsSep; opacity: 0; enabled: false }
+                PropertyChanges { target: reorderText; opacity: 0; enabled: false }
                 PropertyChanges { target: todoListInnerToolBar;
                     width: myListTextId.width + sep.width + todoListTextId.width
                             + newTaskText.width + optionsSep.width + reorderText.width + 100 }
@@ -101,6 +121,20 @@ ApplicationWindow {
                 font.pixelSize: 23
             }
 
+            TextField {
+                id: todoListTextField
+                anchors.verticalCenter: sep.verticalCenter
+                anchors.left: sep.right
+                anchors.leftMargin: 5
+                font.pixelSize: 23
+
+                onEditingFinished: {
+                    todoListModel.updateItem(todoListToolBar.currentTodoListId, TodoListModel.TodoListNameRole, text)
+                    todoListTextId.text = text
+                    todoListToolBar.state = "taskListScreen"
+                }
+            }
+
             Text {
                 id: todoListTextId
                 anchors.verticalCenter: sep.verticalCenter
@@ -125,11 +159,12 @@ ApplicationWindow {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        var id = todoListModel.addItem("Todo List")
-                        taskListModelProxy.setTodoListId(id)
-                        todoListTextId.text = "Todo List"
+                        var currentTodoListItem = todoListModel.addItem()
+                        todoListToolBar.currentTodoListId = currentTodoListItem.id
+                        taskListModelProxy.setTodoListId(currentTodoListItem.id)
+                        todoListTextField.text = currentTodoListItem.name
                         stackView.push({item: taskListView, properties: {}})
-                        todoListToolBar.state = "taskListScreen"
+                        todoListToolBar.state = "taskListScreenNameEdit"
                     }
                 }
             }

@@ -12,12 +12,11 @@ TodoListModel::~TodoListModel()
 {
 }
 
-int TodoListModel::addItem(const QString &name)
+TodoListItem *TodoListModel::addItem()
 {
-    int id = 0;
+    int id = 1;
 
     if (rowCount()) {
-        int id = m_items.at(0)->id();
         QList<TodoListItem *>::const_iterator itr;
         for (itr = m_items.constBegin(); itr != m_items.constEnd(); ++itr) {
             if (id < (*itr)->id())
@@ -27,18 +26,50 @@ int TodoListModel::addItem(const QString &name)
         id++;
     }
 
-    TodoListItem *item = new TodoListItem();
+    TodoListItem *item = new TodoListItem(this);
     item->setId(id);
     item->setBulletSize(0);
     item->setCompleted(false);
-    item->setName(name);
+    item->setName(QString(QLatin1String("Todo List %1")).arg(id));
     item->setDescription("");
 
     beginInsertRows(QModelIndex(), m_items.count(), m_items.count());
     m_items.append(item);
     endInsertRows();
 
-    return id;
+    return item;
+}
+
+void TodoListModel::updateItem(int id, int role, const QVariant &value)
+{
+    TodoListItem *item = NULL;
+
+    QList<TodoListItem *>::iterator itr;
+    for (itr = m_items.begin(); itr != m_items.end(); ++itr) {
+        if (id == (*itr)->id()) {
+            item = *itr;
+            break;
+        }
+    }
+
+    if (item == NULL)
+        return;
+
+    else if (role == IdRole)
+        item->setId(value.toInt());
+    else if (role == BulletSizeRole)
+        item->setBulletSize(value.toInt());
+    else if (role == CompletedRole)
+        item->setCompleted(value.toBool());
+    else if (role == TodoListNameRole)
+        item->setName(value.toString());
+    else if (role == TodoListDescriptionRole)
+        item->setDescription(value.toString());
+    else
+        return;
+
+    beginResetModel();
+    endResetModel();
 }
 
 QVariant TodoListModel::data(const QModelIndex &index, int role) const
@@ -46,7 +77,7 @@ QVariant TodoListModel::data(const QModelIndex &index, int role) const
     if (index.row() < 0 || index.row() >= m_items.count())
         return QVariant();
 
-    const TodoListItem *item = m_items[index.row()];
+    TodoListItem *item = m_items.at(index.row());
 
     if (role == IdRole)
         return item->id();
