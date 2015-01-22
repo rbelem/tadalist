@@ -5,29 +5,29 @@
 
 TaskListModelProxy::TaskListModelProxy(QObject *parent)
     : QSortFilterProxyModel(parent)
-    , m_tadaListId(-1)
+    , m_todoListId(-1)
 {
 }
 
 TaskListModelProxy::TaskListModelProxy(const TaskListModelProxy &other)
     : QSortFilterProxyModel(0)
-    , m_tadaListId(-1)
+    , m_todoListId(-1)
 {
 }
 
-void TaskListModelProxy::setTadaListId(int id)
+void TaskListModelProxy::setTodoListId(int id)
 {
-    if (id == m_tadaListId)
+    if (id == m_todoListId)
         return;
 
-    m_tadaListId = id;
+    m_todoListId = id;
 }
 
 bool TaskListModelProxy::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
-    int sourceTadaListId = index.data(TaskListModel::TodoListIdRole).toInt();
-    if (sourceTadaListId == m_tadaListId)
+    int sourceTodoListId = index.data(TaskListModel::TodoListIdRole).toInt();
+    if (sourceTodoListId == m_todoListId)
         return true;
 
     return false;

@@ -2,22 +2,22 @@
 #include "tadalistitem.h"
 #include "tadalistmodel.h"
 
-TadaListModel::TadaListModel(QObject *parent)
+TodoListModel::TodoListModel(QObject *parent)
     : QAbstractListModel(parent)
 {
     initRoles();
 }
 
-TadaListModel::~TadaListModel()
+TodoListModel::~TodoListModel()
 {
 }
 
-QVariant TadaListModel::data(const QModelIndex &index, int role) const
+QVariant TodoListModel::data(const QModelIndex &index, int role) const
 {
     if (index.row() < 0 || index.row() >= m_items.count())
         return QVariant();
 
-    const TadaListItem *item = m_items[index.row()];
+    const TodoListItem *item = m_items[index.row()];
 
     if (role == IdRole)
         return item->id();
@@ -28,32 +28,32 @@ QVariant TadaListModel::data(const QModelIndex &index, int role) const
     if (role == CompletedRole)
         return item->completed();
 
-    if (role == TadaListNameRole)
+    if (role == TodoListNameRole)
         return item->name();
 
-    if (role == TadaListDescriptionRole)
+    if (role == TodoListDescriptionRole)
         return item->description();
 
     return QVariant();
 }
 
-int TadaListModel::rowCount(const QModelIndex &parent) const
+int TodoListModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
 
     return m_items.count();
 }
 
-QHash<int, QByteArray> TadaListModel::roleNames() const
+QHash<int, QByteArray> TodoListModel::roleNames() const
 {
     return m_roles;
 }
 
-void TadaListModel::initRoles()
+void TodoListModel::initRoles()
 {
-    m_roles[IdRole] = "tadaListId";
+    m_roles[IdRole] = "todoListId";
     m_roles[BulletSizeRole] = "bulletSize";
-    m_roles[CompletedRole] = "tadaListCompleted";
-    m_roles[TadaListNameRole] = "tadaListName";
-    m_roles[TadaListDescriptionRole] = "tadaListDescription";
+    m_roles[CompletedRole] = "todoListCompleted";
+    m_roles[TodoListNameRole] = "todoListName";
+    m_roles[TodoListDescriptionRole] = "todoListDescription";
 }

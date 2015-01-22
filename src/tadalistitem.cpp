@@ -1,6 +1,6 @@
 #include "tadalistitem.h"
 
-TadaListItem::TadaListItem(QObject *parent)
+TodoListItem::TodoListItem(QObject *parent)
     : QObject(parent)
     , m_id(-1)
     , m_bulletSize(-1)
@@ -10,7 +10,7 @@ TadaListItem::TadaListItem(QObject *parent)
 {
 }
 
-TadaListItem::TadaListItem(TadaListItem *item, QObject *parent)
+TodoListItem::TodoListItem(TodoListItem *item, QObject *parent)
     : QObject(parent)
     , m_id(item->id())
     , m_bulletSize(item->bulletSize())
@@ -20,7 +20,7 @@ TadaListItem::TadaListItem(TadaListItem *item, QObject *parent)
 {
 }
 
-void TadaListItem::setId(int id)
+void TodoListItem::setId(int id)
 {
     if (m_id == id)
         return;
@@ -30,7 +30,7 @@ void TadaListItem::setId(int id)
     emit idChanged();
 }
 
-void TadaListItem::setBulletSize(int id)
+void TodoListItem::setBulletSize(int id)
 {
     if (m_bulletSize == id)
         return;
@@ -40,7 +40,7 @@ void TadaListItem::setBulletSize(int id)
     emit bulletSizeChanged();
 }
 
-void TadaListItem::setCompleted(bool completed)
+void TodoListItem::setCompleted(bool completed)
 {
     if (m_completed == completed)
         return;
@@ -50,7 +50,7 @@ void TadaListItem::setCompleted(bool completed)
     emit completedChanged();
 }
 
-void TadaListItem::setName(const QString &name)
+void TodoListItem::setName(const QString &name)
 {
     if (m_name == name)
         return;
@@ -60,7 +60,7 @@ void TadaListItem::setName(const QString &name)
     emit nameChanged();
 }
 
-void TadaListItem::setDescription(const QString &description)
+void TodoListItem::setDescription(const QString &description)
 {
     if (m_description == description)
         return;

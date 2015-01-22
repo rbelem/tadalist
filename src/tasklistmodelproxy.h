@@ -12,14 +12,14 @@ public:
     TaskListModelProxy(QObject *parent = 0);
     TaskListModelProxy(const TaskListModelProxy &other);
 
-    Q_INVOKABLE void setTadaListId(int id);
+    Q_INVOKABLE void setTodoListId(int id);
 
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
 
 private:
-    int m_tadaListId;
+    int m_todoListId;
 };
 
 #endif

@@ -23,11 +23,11 @@ Component {
         }
 
         Text {
-            id: todoListName
+            id: todoListNameText
             anchors.left: dot.right
             anchors.leftMargin: 10
             anchors.verticalCenter: dot.verticalCenter
-            text: name
+            text: todoListName
 
             color: "#03c"
             font.family: "Lucinda Grande"
@@ -37,15 +37,15 @@ Component {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: onTodoListClicked(name)
+                onClicked: onTodoListClicked(todoListName)
             }
         }
 
         Text {
             id: todoListLeft
-            anchors.left: todoListName.right
+            anchors.left: todoListNameText.right
             anchors.leftMargin: 10
-            anchors.verticalCenter: todoListName.verticalCenter
+            anchors.verticalCenter: todoListNameText.verticalCenter
             text: "—  " + lefting + " left"
         }
     }

@@ -12,7 +12,7 @@ ApplicationWindow {
     property Component taskListView: TaskListView {}
 
     toolBar: Rectangle {
-        id: tadaListToolBar
+        id: todoListToolBar
         color: "#ffffff"
         anchors.top: parent.top
         anchors.left: parent.left
@@ -20,11 +20,11 @@ ApplicationWindow {
 
         height: 70
 
-        state: "tadaListScreen"
+        state: "todoListScreen"
 
         states: [
             State {
-                name: "tadaListScreen"
+                name: "todoListScreen"
                 PropertyChanges { target: myListTextIdMouseArea; enabled: false }
                 PropertyChanges { target: sep; opacity: 0 }
                 PropertyChanges { target: todoListTextId; opacity: 0; enabled: false }
@@ -32,7 +32,7 @@ ApplicationWindow {
                 PropertyChanges { target: newTaskText; opacity: 0; enabled: false }
                 PropertyChanges { target: optionsSep; opacity: 0; enabled: false }
                 PropertyChanges { target: reorderText; opacity: 0; enabled: false }
-                PropertyChanges { target: tadaListInnerToolBar; width: 300 }
+                PropertyChanges { target: todoListInnerToolBar; width: 300 }
             },
             State {
                 name: "taskListScreen"
@@ -43,14 +43,14 @@ ApplicationWindow {
                 PropertyChanges { target: newTaskText; opacity: 1; enabled: true }
                 PropertyChanges { target: optionsSep; opacity: 1; enabled: true }
                 PropertyChanges { target: reorderText; opacity: 1; enabled: true }
-                PropertyChanges { target: tadaListInnerToolBar;
+                PropertyChanges { target: todoListInnerToolBar;
                     width: myListTextId.width + sep.width + todoListTextId.width
                             + newTaskText.width + optionsSep.width + reorderText.width + 100 }
             }
         ]
 
         Image {
-            id: tadaListLogo
+            id: todoListLogo
 
             z: 1
             anchors.verticalCenter: parent.verticalCenter
@@ -61,10 +61,10 @@ ApplicationWindow {
         }
 
         Rectangle {
-            id: tadaListInnerToolBar
-            anchors.left: tadaListLogo.right
+            id: todoListInnerToolBar
+            anchors.left: todoListLogo.right
             anchors.leftMargin: -15
-            anchors.bottom: tadaListLogo.bottom
+            anchors.bottom: todoListLogo.bottom
             anchors.bottomMargin: 2
 
             height: 39
@@ -87,7 +87,7 @@ ApplicationWindow {
                     anchors.fill: parent
                     onClicked: {
                         stackView.pop()
-                        tadaListToolBar.state = "tadaListScreen"
+                        todoListToolBar.state = "todoListScreen"
                     }
                 }
             }

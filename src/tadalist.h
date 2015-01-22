@@ -6,7 +6,7 @@
 
 class QQmlComponent;
 class QQmlContext;
-class TadaListModel;
+class TodoListModel;
 
 class TadaList : public QQmlEngine
 {
@@ -23,7 +23,7 @@ private:
     QQmlContext *m_context;
     QQmlComponent *m_component;
 
-    TadaListModel *m_tadaListModel;
+    TodoListModel *m_todoListModel;
 };
 
 #endif

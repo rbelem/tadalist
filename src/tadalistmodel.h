@@ -1,26 +1,25 @@
-
-#ifndef TADALISTMODEL_H
-#define TADALISTMODEL_H
+#ifndef TODOLISTMODEL_H
+#define TODOLISTMODEL_H
 
 #include <QtCore/QAbstractListModel>
 
-class TadaListItem;
+class TodoListItem;
 
-class TadaListModel : public QAbstractListModel
+class TodoListModel : public QAbstractListModel
 {
     Q_OBJECT
 
 public:
-    enum TadaItemRoles {
+    enum TodoItemRoles {
         IdRole = Qt::UserRole + 1,
         BulletSizeRole,
         CompletedRole,
-        TadaListNameRole,
-        TadaListDescriptionRole
+        TodoListNameRole,
+        TodoListDescriptionRole
     };
 
-    TadaListModel(QObject * parent = 0);
-    ~TadaListModel();
+    TodoListModel(QObject * parent = 0);
+    ~TodoListModel();
 
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const;
@@ -29,7 +28,7 @@ public:
 private:
     void initRoles();
 
-    QList<TadaListItem *> m_items;
+    QList<TodoListItem *> m_items;
     QHash<int, QByteArray> m_roles;
 };
 

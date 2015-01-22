@@ -1,9 +1,9 @@
-#ifndef TADALISTITEM_H
-#define TADALISTITEM_H
+#ifndef TODOLISTITEM_H
+#define TODOLISTITEM_H
 
 #include <QtCore/QObject>
 
-class TadaListItem : public QObject
+class TodoListItem : public QObject
 {
     Q_OBJECT
 
@@ -14,8 +14,8 @@ class TadaListItem : public QObject
     Q_PROPERTY(QString description READ description WRITE setName NOTIFY nameChanged);
 
 public:
-    TadaListItem(QObject *parent = 0);
-    TadaListItem(TadaListItem *sourceItem, QObject *parent = 0);
+    TodoListItem(QObject *parent = 0);
+    TodoListItem(TodoListItem *sourceItem, QObject *parent = 0);
 
     void setId(int id);
     int id() const { return m_id; }

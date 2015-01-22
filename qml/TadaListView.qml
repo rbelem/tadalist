@@ -6,7 +6,7 @@ Rectangle {
 
     function onTodoListClicked(name) {
         stackView.push({item: taskListView, properties: {name: name}})
-        tadaListToolBar.state = "taskListScreen"
+        todoListToolBar.state = "taskListScreen"
         todoListTextId.text = name
     }
 
@@ -23,7 +23,7 @@ Rectangle {
 
             anchors.fill: parent
             anchors.leftMargin: 10
-            model: tadaListModel
+            model: todoListModel
             delegate: TodoListDelegate {}
         }
     }
