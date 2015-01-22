@@ -21,6 +21,8 @@ public:
     TodoListModel(QObject * parent = 0);
     ~TodoListModel();
 
+    Q_INVOKABLE int addItem(const QString &name);
+
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const;
     int rowCount(const QModelIndex &parent = QModelIndex()) const;

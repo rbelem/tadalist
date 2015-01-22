@@ -121,6 +121,17 @@ ApplicationWindow {
                 font.family: "Verdana"
                 font.pixelSize: 10
                 font.underline: true
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        var id = todoListModel.addItem("Todo List")
+                        taskListModelProxy.setTodoListId(id)
+                        todoListTextId.text = "Todo List"
+                        stackView.push({item: taskListView, properties: {}})
+                        todoListToolBar.state = "taskListScreen"
+                    }
+                }
             }
 
             Text {

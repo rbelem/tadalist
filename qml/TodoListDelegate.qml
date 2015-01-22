@@ -37,7 +37,7 @@ Component {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: onTodoListClicked(todoListName)
+                onClicked: onTodoListClicked(todoListId, todoListName, todoListDescription)
             }
         }
 
@@ -46,7 +46,7 @@ Component {
             anchors.left: todoListNameText.right
             anchors.leftMargin: 10
             anchors.verticalCenter: todoListNameText.verticalCenter
-            text: "—  " + lefting + " left"
+            text: "—  " + "0" + " left"
         }
     }
 }

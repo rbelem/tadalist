@@ -12,6 +12,35 @@ TodoListModel::~TodoListModel()
 {
 }
 
+int TodoListModel::addItem(const QString &name)
+{
+    int id = 0;
+
+    if (rowCount()) {
+        int id = m_items.at(0)->id();
+        QList<TodoListItem *>::const_iterator itr;
+        for (itr = m_items.constBegin(); itr != m_items.constEnd(); ++itr) {
+            if (id < (*itr)->id())
+                id = (*itr)->id();
+        }
+
+        id++;
+    }
+
+    TodoListItem *item = new TodoListItem();
+    item->setId(id);
+    item->setBulletSize(0);
+    item->setCompleted(false);
+    item->setName(name);
+    item->setDescription("");
+
+    beginInsertRows(QModelIndex(), m_items.count(), m_items.count());
+    m_items.append(item);
+    endInsertRows();
+
+    return id;
+}
+
 QVariant TodoListModel::data(const QModelIndex &index, int role) const
 {
     if (index.row() < 0 || index.row() >= m_items.count())
