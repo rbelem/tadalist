@@ -1,4 +1,4 @@
-#include "tadalistitem.h"
+#include "todolistitem.h"
 
 TodoListItem::TodoListItem(QObject *parent)
     : QObject(parent)

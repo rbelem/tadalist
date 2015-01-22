@@ -7,8 +7,8 @@ QT += \
 
 HEADERS += \
     tadalist.h \
-    tadalistitem.h \
-    tadalistmodel.h \
+    todolistitem.h \
+    todolistmodel.h \
     taskitem.h \
     tasklistmodel.h \
     tasklistmodelproxy.h
@@ -16,8 +16,8 @@ HEADERS += \
 SOURCES += \
     main.cpp \
     tadalist.cpp \
-    tadalistitem.cpp \
-    tadalistmodel.cpp \
+    todolistitem.cpp \
+    todolistmodel.cpp \
     taskitem.cpp \
     tasklistmodel.cpp \
     tasklistmodelproxy.cpp

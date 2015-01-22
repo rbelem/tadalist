@@ -1,6 +1,6 @@
 
-#include "tadalistitem.h"
-#include "tadalistmodel.h"
+#include "todolistitem.h"
+#include "todolistmodel.h"
 
 TodoListModel::TodoListModel(QObject *parent)
     : QAbstractListModel(parent)

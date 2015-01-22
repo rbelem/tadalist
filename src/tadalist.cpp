@@ -7,7 +7,7 @@
 #include <QtQml/QQmlContext>
 #include <QtQuick/QQuickWindow>
 
-#include "tadalistmodel.h"
+#include "todolistmodel.h"
 
 TadaList::TadaList(QObject *parent)
     : QQmlEngine(parent)
