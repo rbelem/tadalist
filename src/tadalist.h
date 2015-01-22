@@ -6,6 +6,8 @@
 
 class QQmlComponent;
 class QQmlContext;
+class TaskListModel;
+class TaskListModelProxy;
 class TodoListModel;
 
 class TadaList : public QQmlEngine
@@ -24,6 +26,8 @@ private:
     QQmlComponent *m_component;
 
     TodoListModel *m_todoListModel;
+    TaskListModel *m_taskListModel;
+    TaskListModelProxy *m_taskListModelProxy;
 };
 
 #endif

@@ -104,7 +104,7 @@ Rectangle {
 
             model: DelegateModel {
                 id: delegateModel
-                model: TaskListModel {}
+                model: taskListModelProxy
                 delegate: TaskListDelegate {}
             }
         }

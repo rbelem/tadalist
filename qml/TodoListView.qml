@@ -4,7 +4,8 @@ import QtQuick.Controls 1.1
 
 Rectangle {
 
-    function onTodoListClicked(name) {
+    function onTodoListClicked(id, name, description) {
+        taskListModelProxy.setTodoListId(id)
         stackView.push({item: taskListView, properties: {name: name}})
         todoListToolBar.state = "taskListScreen"
         todoListTextId.text = name

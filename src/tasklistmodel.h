@@ -22,6 +22,8 @@ public:
     TaskListModel(QObject * parent = 0);
     ~TaskListModel();
 
+    int addItem(int todoListId, const QString &name);
+
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     QHash<int, QByteArray> roleNames() const;

@@ -12,6 +12,35 @@ TaskListModel::~TaskListModel()
 {
 }
 
+int TaskListModel::addItem(int todoListId, const QString &name)
+{
+    int id = 0;
+
+    if (rowCount()) {
+        int id = m_items.at(0)->id();
+        QList<TaskItem *>::const_iterator itr;
+        for (itr = m_items.constBegin(); itr != m_items.constEnd(); ++itr) {
+            if (id < (*itr)->id())
+                id = (*itr)->id();
+        }
+
+        id++;
+    }
+
+    TaskItem *item = new TaskItem();
+    item->setId(id);
+    item->setTodoListId(todoListId);
+    item->setOrder(id);
+    item->setCompleted(false);
+    item->setName(name);
+
+    beginInsertRows(QModelIndex(), m_items.count(), m_items.count());
+    m_items.append(item);
+    endInsertRows();
+
+    return id;
+}
+
 QVariant TaskListModel::data(const QModelIndex &index, int role) const
 {
     if (index.row() < 0 || index.row() >= m_items.count())

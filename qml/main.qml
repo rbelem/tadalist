@@ -145,6 +145,13 @@ ApplicationWindow {
                 font.family: "Verdana"
                 font.pixelSize: 10
                 font.underline: true
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        console.log("New task")
+                    }
+                }
             }
 
             Text {
