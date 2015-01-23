@@ -29,6 +29,7 @@ ApplicationWindow {
         states: [
             State {
                 name: "todoListScreen"
+                PropertyChanges { target: todoListToolBar; height: 70 }
                 PropertyChanges { target: myListTextIdMouseArea; enabled: false }
                 PropertyChanges { target: sep; opacity: 0 }
                 PropertyChanges { target: todoListTextField; opacity: 0; enabled: false }
@@ -38,9 +39,11 @@ ApplicationWindow {
                 PropertyChanges { target: optionsSep; opacity: 0; enabled: false }
                 PropertyChanges { target: reorderText; opacity: 0; enabled: false }
                 PropertyChanges { target: todoListInnerToolBar; width: 300 }
+                PropertyChanges { target: descriptionItem; opacity: 0; enabled: false }
             },
             State {
                 name: "taskListScreen"
+                PropertyChanges { target: todoListToolBar; height: 70 + descriptionItem.height  }
                 PropertyChanges { target: myListTextIdMouseArea; enabled: true }
                 PropertyChanges { target: sep; opacity: 1 }
                 PropertyChanges { target: todoListTextField; opacity: 0; enabled: false }
@@ -52,9 +55,11 @@ ApplicationWindow {
                 PropertyChanges { target: todoListInnerToolBar;
                     width: myListTextId.width + sep.width + todoListTextId.width
                             + newTaskText.width + optionsSep.width + reorderText.width + 100 }
+                PropertyChanges { target: descriptionItem; opacity: 1; enabled: true }
             },
             State {
                 name: "taskListScreenNameEdit"
+                PropertyChanges { target: todoListToolBar; height: 70 }
                 PropertyChanges { target: myListTextIdMouseArea; enabled: false }
                 PropertyChanges { target: sep; opacity: 1 }
                 PropertyChanges { target: todoListTextField; opacity: 1; enabled: true }
@@ -66,6 +71,7 @@ ApplicationWindow {
                 PropertyChanges { target: todoListInnerToolBar;
                     width: myListTextId.width + sep.width + todoListTextId.width
                             + newTaskText.width + optionsSep.width + reorderText.width + 100 }
+                PropertyChanges { target: descriptionItem; opacity: 0; enabled: false }
             }
         ]
 
@@ -217,6 +223,81 @@ ApplicationWindow {
                     id: reorderMouseArea
                     anchors.fill: parent
                 }
+            }
+        }
+
+        Rectangle {
+            id: descriptionItem
+
+            property string todoListDescription: ""
+
+            anchors.top: todoListInnerToolBar.bottom
+            anchors.topMargin: 15
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            anchors.right: parent.right
+
+            state: "NoDescriptionAvailable"
+            states: [
+                State {
+                    name: "NoDescriptionAvailable"
+                    PropertyChanges { target: descriptionItem; height: addDescriptonText.height + 5 }
+                    PropertyChanges { target: addDescriptonText; opacity: 1; enabled: true }
+                    PropertyChanges { target: descriptionText; opacity: 0; enabled: false }
+                    PropertyChanges { target: descriptionTextArea; opacity: 0; enabled: false }
+                },
+                State {
+                    name: "DescriptionAvailable"
+                    PropertyChanges { target: descriptionItem; height: descriptionText.height + 5 }
+                    PropertyChanges { target: addDescriptonText; opacity: 0; enabled: false }
+                    PropertyChanges { target: descriptionText; opacity: 1; enabled: true }
+                    PropertyChanges { target: descriptionTextArea; opacity: 0; enabled: false }
+                },
+                State {
+                    name: "AddingDescription"
+                    PropertyChanges { target: descriptionItem; height: 50 }
+                    PropertyChanges { target: addDescriptonText; opacity: 0; enabled: false }
+                    PropertyChanges { target: descriptionText; opacity: 0; enabled: false }
+                    PropertyChanges { target: descriptionTextArea; opacity: 1; enabled: true }
+                }
+            ]
+
+            Text {
+                id: addDescriptonText
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                text: qsTr("Add description")
+                color: "#f00"
+                font.family: "Verdana"
+                font.pixelSize: 10
+                font.underline: true
+
+                MouseArea {
+                    id: addDescriptonTextMouseArea
+                    anchors.fill: parent
+                    onClicked: {
+                        descriptionItem.state = "AddingDescription"
+                    }
+                }
+            }
+
+            Text {
+                id: descriptionText
+                anchors.fill: parent
+                anchors.leftMargin: 10
+                opacity: 0
+                enabled: false
+                text: parent.todoListDescription
+            }
+
+            TextArea {
+                id: descriptionTextArea
+                anchors.fill: parent
+                anchors.margins: 5
+                opacity: 0
+                enabled: false
+                text: parent.todoListDescription
             }
         }
     }
