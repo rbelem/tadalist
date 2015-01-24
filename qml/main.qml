@@ -17,7 +17,6 @@ ApplicationWindow {
 
         property int currentTodoListId: -1
 
-        color: "#ffffff"
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
