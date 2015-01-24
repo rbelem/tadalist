@@ -8,7 +8,15 @@ Rectangle {
         taskListModelProxy.setTodoListId(id)
         stackView.push({item: taskListView, properties: {}})
         todoListToolBar.state = "taskListScreen"
+        todoListToolBar.currentTodoListId = id
         todoListTextId.text = name
+        descriptionText.text = description
+        descriptionTextArea.text = description
+
+        if (descriptionTextArea.length == 0)
+            descriptionItem.state = "NoDescriptionAvailable"
+        else
+            descriptionItem.state = "DescriptionAvailable"
     }
 
     ScrollView {

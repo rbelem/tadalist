@@ -71,6 +71,22 @@ ApplicationWindow {
                     width: myListTextId.width + sep.width + todoListTextId.width
                             + newTaskText.width + optionsSep.width + reorderText.width + 100 }
                 PropertyChanges { target: descriptionItem; opacity: 0; enabled: false }
+            },
+            State {
+                name: "taskListScreenDescriptionEdit"
+                PropertyChanges { target: todoListToolBar; height: 70 }
+                PropertyChanges { target: myListTextIdMouseArea; enabled: false }
+                PropertyChanges { target: sep; opacity: 1 }
+                PropertyChanges { target: todoListTextField; opacity: 0; enabled: false }
+                PropertyChanges { target: todoListTextId; opacity: 1; enabled: true }
+                PropertyChanges { target: newListText; opacity: 0; enabled: false }
+                PropertyChanges { target: newTaskText; opacity: 0; enabled: false }
+                PropertyChanges { target: optionsSep; opacity: 0; enabled: false }
+                PropertyChanges { target: reorderText; opacity: 0; enabled: false }
+                PropertyChanges { target: todoListInnerToolBar;
+                    width: myListTextId.width + sep.width + todoListTextId.width
+                            + newTaskText.width + optionsSep.width + reorderText.width + 100 }
+                PropertyChanges { target: descriptionItem; opacity: 1; enabled: true }
             }
         ]
 
@@ -168,8 +184,11 @@ ApplicationWindow {
                         todoListToolBar.currentTodoListId = currentTodoListItem.id
                         taskListModelProxy.setTodoListId(currentTodoListItem.id)
                         todoListTextField.text = currentTodoListItem.name
+                        descriptionText.text = ""
+                        descriptionTextArea.text = ""
                         stackView.push({item: taskListView, properties: {}})
                         todoListToolBar.state = "taskListScreenNameEdit"
+                        descriptionItem.state = "NoDescriptionAvailable"
                     }
                 }
             }
@@ -225,10 +244,8 @@ ApplicationWindow {
             }
         }
 
-        Rectangle {
+        Item {
             id: descriptionItem
-
-            property string todoListDescription: ""
 
             anchors.top: todoListInnerToolBar.bottom
             anchors.topMargin: 15
@@ -254,6 +271,7 @@ ApplicationWindow {
                 },
                 State {
                     name: "AddingDescription"
+                    PropertyChanges { target: todoListToolBar; state: "taskListScreenDescriptionEdit" }
                     PropertyChanges { target: descriptionItem; height: 50 }
                     PropertyChanges { target: addDescriptonText; opacity: 0; enabled: false }
                     PropertyChanges { target: descriptionText; opacity: 0; enabled: false }
@@ -287,7 +305,6 @@ ApplicationWindow {
                 anchors.leftMargin: 10
                 opacity: 0
                 enabled: false
-                text: parent.todoListDescription
             }
 
             TextArea {
@@ -296,7 +313,22 @@ ApplicationWindow {
                 anchors.margins: 5
                 opacity: 0
                 enabled: false
-                text: parent.todoListDescription
+
+                function saveDescription(description) {
+                    todoListModel.updateItem(todoListToolBar.currentTodoListId, TodoListModel.TodoListDescriptionRole, description)
+                    descriptionText.text = text
+
+                    if (descriptionTextArea.length > 0)
+                        descriptionItem.state = "DescriptionAvailable"
+                    else
+                        descriptionItem.state = "NoDescriptionAvailable"
+                }
+
+                Keys.onPressed: {
+                    if (Qt.Key_Escape == event.key) {
+                        saveDescription(text)
+                    }
+                }
             }
         }
     }
