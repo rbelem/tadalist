@@ -62,7 +62,7 @@ ApplicationWindow {
                 PropertyChanges { target: todoListToolBar; height: 70 }
                 PropertyChanges { target: myListTextIdMouseArea; enabled: false }
                 PropertyChanges { target: sep; opacity: 1 }
-                PropertyChanges { target: todoListTextField; opacity: 1; enabled: true }
+                PropertyChanges { target: todoListTextField; opacity: 1; enabled: true; focus: true }
                 PropertyChanges { target: todoListTextId; opacity: 0; enabled: false }
                 PropertyChanges { target: newListText; opacity: 0; enabled: false }
                 PropertyChanges { target: newTaskText; opacity: 0; enabled: false }
