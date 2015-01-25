@@ -325,7 +325,7 @@ ApplicationWindow {
                 }
 
                 Keys.onPressed: {
-                    if (Qt.Key_Escape == event.key) {
+                    if ((Qt.Key_Escape === event.key) || ((Qt.Key_Return === event.key) && (event.modifiers === 0))) {
                         saveDescription(text)
                     }
                 }
