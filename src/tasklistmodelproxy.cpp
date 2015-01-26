@@ -23,6 +23,12 @@ void TaskListModelProxy::setTodoListId(int id)
     m_todoListId = id;
 }
 
+void TaskListModelProxy::addItem(const QString &name)
+{
+    TaskListModel *model = qobject_cast<TaskListModel *>(sourceModel());
+    model->addItem(m_todoListId, name);
+}
+
 bool TaskListModelProxy::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     QModelIndex index = sourceModel()->index(source_row, 0, source_parent);

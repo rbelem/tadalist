@@ -13,6 +13,7 @@ public:
     TaskListModelProxy(const TaskListModelProxy &other);
 
     Q_INVOKABLE void setTodoListId(int id);
+    Q_INVOKABLE void addItem(const QString &name);
 
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;

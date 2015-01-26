@@ -47,7 +47,7 @@ MouseArea {
             },
             State {
                 when: checkbox.checked
-                PropertyChanges { target: taskName; font.pixelSize: 10; color: "#999" }
+                PropertyChanges { target: taskNameText; font.pixelSize: 10; color: "#999" }
             },
             State {
                 name: "DragActive"
@@ -55,6 +55,8 @@ MouseArea {
                 AnchorChanges { target: checkbox; anchors.left: dragImage.right }
                 PropertyChanges { target: mouseArea; enabled: true  }
                 PropertyChanges { target: checkbox; enabled: false  }
+                PropertyChanges { target: taskNameMouseArea; enabled: false }
+                PropertyChanges { target: taskNameField; enabled: false; visible: false }
             },
             State {
                 name: "DragInactive"
@@ -62,6 +64,8 @@ MouseArea {
                 AnchorChanges { target: checkbox; anchors.left: parent.left }
                 PropertyChanges { target: mouseArea; enabled: false  }
                 PropertyChanges { target: checkbox; enabled: true  }
+                PropertyChanges { target: taskNameMouseArea; enabled: true }
+                PropertyChanges { target: taskNameField; enabled: false; visible: false }
             }
         ]
 
@@ -81,15 +85,32 @@ MouseArea {
             anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
 
-            checked: completed
+            checked: taskCompleted
         }
 
         Text {
-            id: taskName
+            id: taskNameText
             anchors.left: checkbox.right
             anchors.leftMargin: 1
             anchors.verticalCenter: checkbox.verticalCenter
-            text: name
+            text: taskName
+
+            font.pixelSize: 16
+
+            MouseArea {
+                id: taskNameMouseArea
+                anchors.fill: parent
+
+                onClicked: console.log("taskNameMouseArea clicked")
+            }
+        }
+
+        TextField {
+            id: taskNameField
+            anchors.left: checkbox.right
+            anchors.leftMargin: 1
+            anchors.verticalCenter: checkbox.verticalCenter
+            text: taskName
 
             font.pixelSize: 16
         }

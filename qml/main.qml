@@ -242,6 +242,7 @@ ApplicationWindow {
                     anchors.fill: parent
                     onClicked: {
                         console.log("New task")
+                        taskListModelProxy.addItem("new task")
                     }
                 }
             }
