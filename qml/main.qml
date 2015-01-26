@@ -38,11 +38,13 @@ ApplicationWindow {
                 PropertyChanges { target: optionsSep; opacity: 0; enabled: false }
                 PropertyChanges { target: reorderText; opacity: 0; enabled: false }
                 PropertyChanges { target: todoListInnerToolBar; width: 300 }
-                PropertyChanges { target: descriptionItem; opacity: 0; enabled: false }
+                PropertyChanges { target: addDescriptonText; opacity: 0; enabled: false }
+                PropertyChanges { target: descriptionText; opacity: 0; enabled: false }
+                PropertyChanges { target: descriptionTextArea; opacity: 0; enabled: false }
             },
             State {
-                name: "taskListScreen"
-                PropertyChanges { target: todoListToolBar; height: 70 + descriptionItem.height  }
+                name: "taskListScreenAddDescription"
+                PropertyChanges { target: todoListToolBar; height: 70 }
                 PropertyChanges { target: myListTextIdMouseArea; enabled: true }
                 PropertyChanges { target: sep; opacity: 1 }
                 PropertyChanges { target: todoListTextField; opacity: 0; enabled: false }
@@ -54,27 +56,31 @@ ApplicationWindow {
                 PropertyChanges { target: todoListInnerToolBar;
                     width: myListTextId.width + sep.width + todoListTextId.width
                             + newTaskText.width + optionsSep.width + reorderText.width + 100 }
-                PropertyChanges { target: descriptionItem; opacity: 1; enabled: true }
+                PropertyChanges { target: addDescriptonText; opacity: 1; enabled: true }
+                PropertyChanges { target: descriptionText; opacity: 0; enabled: false }
+                PropertyChanges { target: descriptionTextArea; opacity: 0; enabled: false }
             },
             State {
-                name: "taskListScreenNameEdit"
+                name: "taskListScreenShowDescription"
                 PropertyChanges { target: todoListToolBar; height: 70 }
-                PropertyChanges { target: myListTextIdMouseArea; enabled: false }
+                PropertyChanges { target: myListTextIdMouseArea; enabled: true }
                 PropertyChanges { target: sep; opacity: 1 }
-                PropertyChanges { target: todoListTextField; opacity: 1; enabled: true; focus: true }
-                PropertyChanges { target: todoListTextId; opacity: 0; enabled: false }
+                PropertyChanges { target: todoListTextField; opacity: 0; enabled: false }
+                PropertyChanges { target: todoListTextId; opacity: 1; enabled: true }
                 PropertyChanges { target: newListText; opacity: 0; enabled: false }
-                PropertyChanges { target: newTaskText; opacity: 0; enabled: false }
-                PropertyChanges { target: optionsSep; opacity: 0; enabled: false }
-                PropertyChanges { target: reorderText; opacity: 0; enabled: false }
+                PropertyChanges { target: newTaskText; opacity: 1; enabled: true }
+                PropertyChanges { target: optionsSep; opacity: 1; enabled: true }
+                PropertyChanges { target: reorderText; opacity: 1; enabled: true }
                 PropertyChanges { target: todoListInnerToolBar;
                     width: myListTextId.width + sep.width + todoListTextId.width
                             + newTaskText.width + optionsSep.width + reorderText.width + 100 }
-                PropertyChanges { target: descriptionItem; opacity: 0; enabled: false }
+                PropertyChanges { target: addDescriptonText; opacity: 0; enabled: false }
+                PropertyChanges { target: descriptionText; opacity: 1; enabled: true }
+                PropertyChanges { target: descriptionTextArea; opacity: 0; enabled: false }
             },
             State {
-                name: "taskListScreenDescriptionEdit"
-                PropertyChanges { target: todoListToolBar; height: 70 }
+                name: "taskListScreenEditDescription"
+                PropertyChanges { target: todoListToolBar; height: 150 }
                 PropertyChanges { target: myListTextIdMouseArea; enabled: false }
                 PropertyChanges { target: sep; opacity: 1 }
                 PropertyChanges { target: todoListTextField; opacity: 0; enabled: false }
@@ -86,7 +92,29 @@ ApplicationWindow {
                 PropertyChanges { target: todoListInnerToolBar;
                     width: myListTextId.width + sep.width + todoListTextId.width
                             + newTaskText.width + optionsSep.width + reorderText.width + 100 }
-                PropertyChanges { target: descriptionItem; opacity: 1; enabled: true }
+                PropertyChanges { target: addDescriptonText; opacity: 0; enabled: false }
+                PropertyChanges { target: descriptionText; opacity: 0; enabled: false }
+                PropertyChanges { target: descriptionTextArea; opacity: 1; enabled: true;
+                    height: 80; focus: true }
+            },
+            State {
+                name: "taskListScreenNameEdit"
+                PropertyChanges { target: todoListToolBar; height: 70 }
+                PropertyChanges { target: myListTextIdMouseArea; enabled: false }
+                PropertyChanges { target: sep; opacity: 1 }
+                PropertyChanges { target: todoListTextField; opacity: 1; enabled: true;
+                    focus: true }
+                PropertyChanges { target: todoListTextId; opacity: 0; enabled: false }
+                PropertyChanges { target: newListText; opacity: 0; enabled: false }
+                PropertyChanges { target: newTaskText; opacity: 0; enabled: false }
+                PropertyChanges { target: optionsSep; opacity: 0; enabled: false }
+                PropertyChanges { target: reorderText; opacity: 0; enabled: false }
+                PropertyChanges { target: todoListInnerToolBar;
+                    width: myListTextId.width + sep.width + todoListTextId.width
+                            + newTaskText.width + optionsSep.width + reorderText.width + 100 }
+                PropertyChanges { target: addDescriptonText; opacity: 0; enabled: false }
+                PropertyChanges { target: descriptionText; opacity: 0; enabled: false }
+                PropertyChanges { target: descriptionTextArea; opacity: 0; enabled: false }
             }
         ]
 
@@ -152,7 +180,12 @@ ApplicationWindow {
                 onEditingFinished: {
                     todoListModel.updateItem(todoListToolBar.currentTodoListId, TodoListModel.TodoListNameRole, text)
                     todoListTextId.text = text
-                    todoListToolBar.state = "taskListScreen"
+
+                    var str = descriptionText.text
+                    if (str.trim().length === 0)
+                        todoListToolBar.state = "taskListScreenAddDescription"
+                    else
+                        todoListToolBar.state = "taskListScreenShowDescription"
                 }
             }
 
@@ -184,11 +217,11 @@ ApplicationWindow {
                         todoListToolBar.currentTodoListId = currentTodoListItem.id
                         taskListModelProxy.setTodoListId(currentTodoListItem.id)
                         todoListTextField.text = currentTodoListItem.name
+                        stackView.push({item: taskListView, properties: {}})
+
                         descriptionText.text = ""
                         descriptionTextArea.text = ""
-                        stackView.push({item: taskListView, properties: {}})
                         todoListToolBar.state = "taskListScreenNameEdit"
-                        descriptionItem.state = "NoDescriptionAvailable"
                     }
                 }
             }
@@ -244,90 +277,58 @@ ApplicationWindow {
             }
         }
 
-        Item {
-            id: descriptionItem
+        Text {
+            id: addDescriptonText
+            anchors.top: todoListInnerToolBar.bottom
+            anchors.topMargin: 15
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            text: qsTr("Add description")
+            color: "#f00"
+            font.family: "Verdana"
+            font.pixelSize: 10
+            font.underline: true
 
+            MouseArea {
+                id: addDescriptonTextMouseArea
+                anchors.fill: parent
+                onClicked: {
+                    descriptionText.text = ""
+                    descriptionTextArea.text = ""
+                    todoListToolBar.state = "taskListScreenEditDescription"
+                }
+            }
+        }
+
+        Text {
+            id: descriptionText
             anchors.top: todoListInnerToolBar.bottom
             anchors.topMargin: 15
             anchors.left: parent.left
             anchors.leftMargin: 10
             anchors.right: parent.right
+            anchors.rightMargin: 10
+            anchors.bottom: parent.bottom
+        }
 
-            state: "NoDescriptionAvailable"
-            states: [
-                State {
-                    name: "NoDescriptionAvailable"
-                    PropertyChanges { target: descriptionItem; height: addDescriptonText.height + 5 }
-                    PropertyChanges { target: addDescriptonText; opacity: 1; enabled: true }
-                    PropertyChanges { target: descriptionText; opacity: 0; enabled: false }
-                    PropertyChanges { target: descriptionTextArea; opacity: 0; enabled: false }
-                },
-                State {
-                    name: "DescriptionAvailable"
-                    PropertyChanges { target: descriptionItem; height: descriptionText.height + 5 }
-                    PropertyChanges { target: addDescriptonText; opacity: 0; enabled: false }
-                    PropertyChanges { target: descriptionText; opacity: 1; enabled: true }
-                    PropertyChanges { target: descriptionTextArea; opacity: 0; enabled: false }
-                },
-                State {
-                    name: "AddingDescription"
-                    PropertyChanges { target: todoListToolBar; state: "taskListScreenDescriptionEdit" }
-                    PropertyChanges { target: descriptionItem; height: 50 }
-                    PropertyChanges { target: addDescriptonText; opacity: 0; enabled: false }
-                    PropertyChanges { target: descriptionText; opacity: 0; enabled: false }
-                    PropertyChanges { target: descriptionTextArea; opacity: 1; enabled: true }
-                }
-            ]
+        TextArea {
+            id: descriptionTextArea
+            anchors.top: todoListInnerToolBar.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.margins: 5
 
-            Text {
-                id: addDescriptonText
-                anchors.top: parent.top
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                text: qsTr("Add description")
-                color: "#f00"
-                font.family: "Verdana"
-                font.pixelSize: 10
-                font.underline: true
-
-                MouseArea {
-                    id: addDescriptonTextMouseArea
-                    anchors.fill: parent
-                    onClicked: {
-                        descriptionItem.state = "AddingDescription"
-                    }
-                }
-            }
-
-            Text {
-                id: descriptionText
-                anchors.fill: parent
-                anchors.leftMargin: 10
-                opacity: 0
-                enabled: false
-            }
-
-            TextArea {
-                id: descriptionTextArea
-                anchors.fill: parent
-                anchors.margins: 5
-                opacity: 0
-                enabled: false
-
-                function saveDescription(description) {
-                    todoListModel.updateItem(todoListToolBar.currentTodoListId, TodoListModel.TodoListDescriptionRole, description)
+            Keys.onPressed: {
+                if ((Qt.Key_Escape === event.key) || ((Qt.Key_Return === event.key) && (event.modifiers === 0))) {
+                    todoListModel.updateItem(todoListToolBar.currentTodoListId, TodoListModel.TodoListDescriptionRole, text)
                     descriptionText.text = text
 
-                    if (descriptionTextArea.length > 0)
-                        descriptionItem.state = "DescriptionAvailable"
+                    var str = text
+                    if (str.trim().length === 0)
+                        todoListToolBar.state = "taskListScreenAddDescription"
                     else
-                        descriptionItem.state = "NoDescriptionAvailable"
-                }
-
-                Keys.onPressed: {
-                    if ((Qt.Key_Escape === event.key) || ((Qt.Key_Return === event.key) && (event.modifiers === 0))) {
-                        saveDescription(text)
-                    }
+                        todoListToolBar.state = "taskListScreenShowDescription"
                 }
             }
         }
