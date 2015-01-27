@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>tada-mark-bg.gif</file>
         <file>drag.gif</file>
+        <file>grey_delete.gif</file>
+        <file>tada-mark-bg.gif</file>
     </qresource>
 </RCC>

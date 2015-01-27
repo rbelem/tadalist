@@ -71,6 +71,15 @@ MouseArea {
         ]
 
         Image {
+            id: deleteImage
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            anchors.verticalCenter: parent.verticalCenter
+            visible: false
+            source: "grey_delete.gif"
+        }
+
+        Image {
             id: dragImage
             anchors.left: parent.left
             anchors.leftMargin: 10
@@ -104,6 +113,8 @@ MouseArea {
 
                 onClicked: {
                     taskListView.currentIndex = index
+                    deleteImage.visible = true
+                    checkbox.anchors.left = deleteImage.right
                     taskNameText.visible = false
                     taskNameText.enabled = false
                     taskNameField.visible = true
@@ -124,6 +135,8 @@ MouseArea {
 
             onEditingFinished: {
                 taskListModelProxy.updateItem(index, text, TaskListModel.TaskNameRole)
+                deleteImage.visible = false
+                checkbox.anchors.left = parent.left
                 taskNameText.visible = true
                 taskNameText.enabled = true
                 taskNameField.visible = false
