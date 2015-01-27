@@ -23,10 +23,10 @@ void TaskListModelProxy::setTodoListId(int id)
     m_todoListId = id;
 }
 
-void TaskListModelProxy::addItem(const QString &name)
+void TaskListModelProxy::addItem()
 {
     TaskListModel *model = qobject_cast<TaskListModel *>(sourceModel());
-    model->addItem(m_todoListId, name);
+    model->addItem(m_todoListId);
 }
 
 void TaskListModelProxy::updateItem(int id, const QVariant &value, int role)

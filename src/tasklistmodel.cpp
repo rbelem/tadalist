@@ -12,12 +12,11 @@ TaskListModel::~TaskListModel()
 {
 }
 
-int TaskListModel::addItem(int todoListId, const QString &name)
+int TaskListModel::addItem(int todoListId)
 {
-    int id = 0;
+    int id = 1;
 
     if (rowCount()) {
-        int id = m_items.at(0)->id();
         QList<TaskItem *>::const_iterator itr;
         for (itr = m_items.constBegin(); itr != m_items.constEnd(); ++itr) {
             if (id < (*itr)->id())
@@ -32,7 +31,7 @@ int TaskListModel::addItem(int todoListId, const QString &name)
     item->setTodoListId(todoListId);
     item->setOrder(id);
     item->setCompleted(false);
-    item->setName(name);
+    item->setName(QString(QLatin1String("New task %1")).arg(id));
 
     beginInsertRows(QModelIndex(), m_items.count(), m_items.count());
     m_items.append(item);

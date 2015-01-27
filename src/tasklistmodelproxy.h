@@ -13,7 +13,7 @@ public:
     TaskListModelProxy(const TaskListModelProxy &other);
 
     Q_INVOKABLE void setTodoListId(int id);
-    Q_INVOKABLE void addItem(const QString &name);
+    Q_INVOKABLE void addItem();
     Q_INVOKABLE void updateItem(int id, const QVariant &value, int role);
 
 protected:
