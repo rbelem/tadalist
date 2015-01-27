@@ -35,6 +35,7 @@ TadaList::TadaList(QObject *parent)
     m_todoListModelCompleted->setSourceModel(m_todoListModel);
     m_todoListModelUnfinished->setTodoListType(TodoListModelProxy::UnfinishedTodoList);
     m_todoListModelUnfinished->setSourceModel(m_todoListModel);
+    m_taskListModelProxy->setSortRole(TaskListModel::OrderRole);
     m_taskListModelProxy->setSourceModel(m_taskListModel);
 
     m_context->setContextProperty("todoListModelCompleted", m_todoListModelCompleted);

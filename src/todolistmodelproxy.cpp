@@ -32,14 +32,16 @@ TodoListItem *TodoListModelProxy::addItem()
 
 void TodoListModelProxy::updateItem(int id, const QVariant &value, int role)
 {
-    QModelIndex itemIndex = index(id, 0);
-    sourceModel()->setData(itemIndex, value, role);
+    QModelIndex proxyIndex = index(id, 0);
+    QModelIndex sourceIndex = mapToSource(proxyIndex);
+    sourceModel()->setData(sourceIndex, value, role);
 }
 
 void TodoListModelProxy::removeItem(int id)
 {
-    QModelIndex itemIndex = index(id, 0);
-    sourceModel()->removeRow(itemIndex.row());
+    QModelIndex proxyIndex = index(id, 0);
+    QModelIndex sourceIndex = mapToSource(proxyIndex);
+    sourceModel()->removeRow(sourceIndex.row());
 }
 
 bool TodoListModelProxy::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const

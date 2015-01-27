@@ -119,8 +119,9 @@ MouseArea {
             anchors.left: parent.left
             anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
-
             checked: taskCompleted
+
+            onClicked: taskListModelProxy.updateItem(index, checked, TaskListModel.CompletedRole)
         }
 
         Text {

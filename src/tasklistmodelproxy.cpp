@@ -21,6 +21,7 @@ void TaskListModelProxy::setTodoListId(int id)
         return;
 
     m_todoListId = id;
+    invalidateFilter();
 }
 
 void TaskListModelProxy::addItem()
@@ -31,14 +32,18 @@ void TaskListModelProxy::addItem()
 
 void TaskListModelProxy::updateItem(int id, const QVariant &value, int role)
 {
-    QModelIndex itemIndex = index(id, 0);
-    sourceModel()->setData(itemIndex, value, role);
+    QModelIndex proxyIndex = index(id, 0);
+    QModelIndex sourceIndex = mapToSource(proxyIndex);
+    sourceModel()->setData(sourceIndex, value, role);
+    invalidate();
+    sort(0);
 }
 
 void TaskListModelProxy::removeItem(int id)
 {
-    QModelIndex itemIndex = index(id, 0);
-    sourceModel()->removeRow(itemIndex.row());
+    QModelIndex proxyIndex = index(id, 0);
+    QModelIndex sourceIndex = mapToSource(proxyIndex);
+    sourceModel()->removeRow(sourceIndex.row());
 }
 
 bool TaskListModelProxy::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
@@ -53,5 +58,16 @@ bool TaskListModelProxy::filterAcceptsRow(int source_row, const QModelIndex &sou
 
 bool TaskListModelProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-    return true;
+    bool leftCompleted = left.data(TaskListModel::CompletedRole).toBool();
+    bool rightCompleted = right.data(TaskListModel::CompletedRole).toBool();
+    if (leftCompleted != rightCompleted) {
+        return leftCompleted ? false : true;
+    }
+
+    int leftOrder = left.data(TaskListModel::OrderRole).toInt();
+    int rightOrder = right.data(TaskListModel::OrderRole).toInt();
+    if (leftOrder < rightOrder)
+        return true;
+
+    return false;
 }

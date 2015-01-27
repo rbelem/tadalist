@@ -71,6 +71,8 @@ bool TaskListModel::setData(const QModelIndex &index, const QVariant &value, int
         return false;
 
     TaskItem *item = m_items[index.row()];
+    QVector<int> changedRoles;
+    changedRoles.append(role);
 
     if (role == IdRole)
         item->setId(value.toInt());
@@ -85,7 +87,7 @@ bool TaskListModel::setData(const QModelIndex &index, const QVariant &value, int
     else
         return false;
 
-    emit dataChanged(index, index);
+    emit dataChanged(index, index, changedRoles);
 
     return true;
 }
