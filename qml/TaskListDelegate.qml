@@ -48,23 +48,35 @@ MouseArea {
             },
             State {
                 when: checkbox.checked
-                PropertyChanges { target: taskNameText; font.pixelSize: 10; color: "#999" }
+                PropertyChanges { target: mouseArea; enabled: false }
+                PropertyChanges { target: deleteImage; visible: false  }
+                PropertyChanges { target: dragImage; visible: false  }
+                PropertyChanges { target: checkbox; enabled: true  }
+                PropertyChanges { target: taskNameText; enabled: true; visible: true; font.pixelSize: 10; color: "#999" }
+                PropertyChanges { target: taskNameMouseArea; enabled: false }
+                PropertyChanges { target: taskNameField; enabled: false; visible: false }
             },
             State {
                 name: "DragActive"
-                PropertyChanges { target: dragImage; visible: true  }
                 AnchorChanges { target: checkbox; anchors.left: dragImage.right }
+
                 PropertyChanges { target: mouseArea; enabled: true  }
+                PropertyChanges { target: deleteImage; visible: false  }
+                PropertyChanges { target: dragImage; visible: true  }
                 PropertyChanges { target: checkbox; enabled: false  }
+                PropertyChanges { target: taskNameText; enabled: true; visible: true }
                 PropertyChanges { target: taskNameMouseArea; enabled: false }
                 PropertyChanges { target: taskNameField; enabled: false; visible: false }
             },
             State {
                 name: "DragInactive"
-                PropertyChanges { target: dragImage; visible: false  }
                 AnchorChanges { target: checkbox; anchors.left: parent.left }
+
                 PropertyChanges { target: mouseArea; enabled: false  }
+                PropertyChanges { target: deleteImage; visible: false  }
+                PropertyChanges { target: dragImage; visible: false  }
                 PropertyChanges { target: checkbox; enabled: true  }
+                PropertyChanges { target: taskNameText; enabled: true; visible: true }
                 PropertyChanges { target: taskNameMouseArea; enabled: true }
                 PropertyChanges { target: taskNameField; enabled: false; visible: false }
             }
@@ -75,7 +87,6 @@ MouseArea {
             anchors.left: parent.left
             anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
-            visible: false
             source: "grey_delete.gif"
         }
 
@@ -84,7 +95,6 @@ MouseArea {
             anchors.left: parent.left
             anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
-            visible: false
             source: "drag.gif"
         }
 
@@ -152,10 +162,16 @@ MouseArea {
         onDropped: console.log("dropped")
         onPositionChanged: {
             mouseArea.state = "DragActive"
+            mouseArea.enabled = true
+            deleteImage.visible = false
             dragImage.visible = true
             checkbox.anchors.left = dragImage.right
-            mouseArea.enabled = true
             checkbox.enabled = false
+            taskNameText.enabled = true
+            taskNameText.visible = true
+            taskNameMouseArea.enabled = false
+            taskNameField.enabled = false
+            taskNameField.visible = false
         }
     }
 }
