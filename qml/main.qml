@@ -21,14 +21,14 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        height: 70
+        height: 100
 
         state: "todoListScreen"
 
         states: [
             State {
                 name: "todoListScreen"
-                PropertyChanges { target: todoListToolBar; height: 70 }
+                PropertyChanges { target: todoListToolBar; height: 100 }
                 PropertyChanges { target: myListTextIdMouseArea; enabled: false }
                 PropertyChanges { target: sep; opacity: 0 }
                 PropertyChanges { target: todoListTextField; opacity: 0; enabled: false }
@@ -44,7 +44,7 @@ ApplicationWindow {
             },
             State {
                 name: "taskListScreenAddDescription"
-                PropertyChanges { target: todoListToolBar; height: 70 }
+                PropertyChanges { target: todoListToolBar; height: 100 }
                 PropertyChanges { target: myListTextIdMouseArea; enabled: true }
                 PropertyChanges { target: sep; opacity: 1 }
                 PropertyChanges { target: todoListTextField; opacity: 0; enabled: false }
@@ -62,7 +62,7 @@ ApplicationWindow {
             },
             State {
                 name: "taskListScreenShowDescription"
-                PropertyChanges { target: todoListToolBar; height: 70 }
+                PropertyChanges { target: todoListToolBar; height: 100 }
                 PropertyChanges { target: myListTextIdMouseArea; enabled: true }
                 PropertyChanges { target: sep; opacity: 1 }
                 PropertyChanges { target: todoListTextField; opacity: 0; enabled: false }
@@ -99,7 +99,7 @@ ApplicationWindow {
             },
             State {
                 name: "taskListScreenNameEdit"
-                PropertyChanges { target: todoListToolBar; height: 70 }
+                PropertyChanges { target: todoListToolBar; height: 100 }
                 PropertyChanges { target: myListTextIdMouseArea; enabled: false }
                 PropertyChanges { target: sep; opacity: 1 }
                 PropertyChanges { target: todoListTextField; opacity: 1; enabled: true;
@@ -122,7 +122,8 @@ ApplicationWindow {
             id: todoListLogo
 
             z: 1
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.top: parent.top
+            anchors.topMargin: 10
             anchors.left: parent.left
             anchors.leftMargin: 10
 
