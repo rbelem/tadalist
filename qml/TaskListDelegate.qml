@@ -2,6 +2,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQml.Models 2.1
+import com.ics.tadalist 0.1
 
 MouseArea {
     id: mouseArea
@@ -101,7 +102,14 @@ MouseArea {
                 id: taskNameMouseArea
                 anchors.fill: parent
 
-                onClicked: console.log("taskNameMouseArea clicked")
+                onClicked: {
+                    taskListView.currentIndex = index
+                    taskNameText.visible = false
+                    taskNameText.enabled = false
+                    taskNameField.visible = true
+                    taskNameField.enabled = true
+                    taskNameField.focus = true
+                }
             }
         }
 
@@ -113,6 +121,14 @@ MouseArea {
             text: taskName
 
             font.pixelSize: 16
+
+            onEditingFinished: {
+                taskListModelProxy.updateItem(index, text, TaskListModel.TaskNameRole)
+                taskNameText.visible = true
+                taskNameText.enabled = true
+                taskNameField.visible = false
+                taskNameField.enabled = false
+            }
         }
     }
 

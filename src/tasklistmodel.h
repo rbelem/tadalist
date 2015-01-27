@@ -9,6 +9,7 @@ class TaskItem;
 class TaskListModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_ENUMS(TaskItemRoles)
 
 public:
     enum TaskItemRoles {

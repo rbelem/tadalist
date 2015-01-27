@@ -23,6 +23,7 @@ TadaList::TadaList(QObject *parent)
     QCoreApplication *app = QCoreApplication::instance();
     connect(app, SIGNAL(aboutToQuit()), SLOT(onQuit()));
 
+    qmlRegisterType<TaskListModel>("com.ics.tadalist", 0, 1, "TaskListModel");
     qmlRegisterType<TodoListItem>("com.ics.tadalist", 0, 1, "TodoListItem");
     qmlRegisterType<TodoListModel>("com.ics.tadalist", 0, 1, "TodoListModel");
 

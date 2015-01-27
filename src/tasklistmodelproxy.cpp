@@ -29,6 +29,12 @@ void TaskListModelProxy::addItem(const QString &name)
     model->addItem(m_todoListId, name);
 }
 
+void TaskListModelProxy::updateItem(int id, const QVariant &value, int role)
+{
+    QModelIndex itemIndex = index(id, 0);
+    sourceModel()->setData(itemIndex, value, role);
+}
+
 bool TaskListModelProxy::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
