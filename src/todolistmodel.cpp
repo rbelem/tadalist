@@ -40,38 +40,6 @@ TodoListItem *TodoListModel::addItem()
     return item;
 }
 
-void TodoListModel::updateItem(int id, int role, const QVariant &value)
-{
-    TodoListItem *item = NULL;
-
-    QList<TodoListItem *>::iterator itr;
-    for (itr = m_items.begin(); itr != m_items.end(); ++itr) {
-        if (id == (*itr)->id()) {
-            item = *itr;
-            break;
-        }
-    }
-
-    if (item == NULL)
-        return;
-
-    else if (role == IdRole)
-        item->setId(value.toInt());
-    else if (role == BulletSizeRole)
-        item->setBulletSize(value.toInt());
-    else if (role == CompletedRole)
-        item->setCompleted(value.toBool());
-    else if (role == TodoListNameRole)
-        item->setName(value.toString());
-    else if (role == TodoListDescriptionRole)
-        item->setDescription(value.toString());
-    else
-        return;
-
-    beginResetModel();
-    endResetModel();
-}
-
 QVariant TodoListModel::data(const QModelIndex &index, int role) const
 {
     if (index.row() < 0 || index.row() >= m_items.count())
@@ -95,6 +63,34 @@ QVariant TodoListModel::data(const QModelIndex &index, int role) const
         return item->description();
 
     return QVariant();
+}
+
+bool TodoListModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (index.row() < 0 || index.row() >= m_items.count())
+        return false;
+
+    TodoListItem *item = m_items[index.row()];
+
+    if (item == NULL)
+        return false;
+
+    else if (role == IdRole)
+        item->setId(value.toInt());
+    else if (role == BulletSizeRole)
+        item->setBulletSize(value.toInt());
+    else if (role == CompletedRole)
+        item->setCompleted(value.toBool());
+    else if (role == TodoListNameRole)
+        item->setName(value.toString());
+    else if (role == TodoListDescriptionRole)
+        item->setDescription(value.toString());
+    else
+        return false;
+
+    emit dataChanged(index, index);
+
+    return true;
 }
 
 int TodoListModel::rowCount(const QModelIndex &parent) const

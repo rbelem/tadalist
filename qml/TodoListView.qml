@@ -32,7 +32,7 @@ Rectangle {
 
             anchors.fill: parent
             anchors.leftMargin: 10
-            model: todoListModel
+            model: todoListModelUnfinished
             delegate: TodoListDelegate {}
         }
     }
@@ -70,9 +70,9 @@ Rectangle {
             Repeater {
                 id: completedListRepeater
 
-                model: TodoListModel {}
+                model: todoListModelCompleted
                 delegate: Text {
-                    text: name + ","
+                    text: todoListName + ","
                     color: "#03c"
                     font.pixelSize: 9
                     font.underline: true

@@ -179,7 +179,7 @@ ApplicationWindow {
                 font.pixelSize: 23
 
                 onEditingFinished: {
-                    todoListModel.updateItem(todoListToolBar.currentTodoListId, TodoListModel.TodoListNameRole, text)
+                    todoListModelUnfinished.updateItem(todoListToolBar.currentTodoListId, TodoListModel.TodoListNameRole, text)
                     todoListTextId.text = text
 
                     var str = descriptionText.text
@@ -214,7 +214,7 @@ ApplicationWindow {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        var currentTodoListItem = todoListModel.addItem()
+                        var currentTodoListItem = todoListModelUnfinished.addItem()
                         todoListToolBar.currentTodoListId = currentTodoListItem.id
                         taskListModelProxy.setTodoListId(currentTodoListItem.id)
                         todoListTextField.text = currentTodoListItem.name

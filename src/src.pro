@@ -7,20 +7,22 @@ QT += \
 
 HEADERS += \
     tadalist.h \
-    todolistitem.h \
-    todolistmodel.h \
     taskitem.h \
     tasklistmodel.h \
-    tasklistmodelproxy.h
+    tasklistmodelproxy.h \
+    todolistitem.h \
+    todolistmodel.h \
+    todolistmodelproxy.h
 
 SOURCES += \
     main.cpp \
     tadalist.cpp \
-    todolistitem.cpp \
-    todolistmodel.cpp \
     taskitem.cpp \
     tasklistmodel.cpp \
-    tasklistmodelproxy.cpp
+    tasklistmodelproxy.cpp \
+    todolistitem.cpp \
+    todolistmodel.cpp \
+    todolistmodelproxy.cpp
 
 RESOURCES += \
     ../images/images.qrc \

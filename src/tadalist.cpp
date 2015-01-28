@@ -9,6 +9,7 @@
 
 #include "todolistitem.h"
 #include "todolistmodel.h"
+#include "todolistmodelproxy.h"
 #include "tasklistmodel.h"
 #include "tasklistmodelproxy.h"
 
@@ -17,6 +18,8 @@ TadaList::TadaList(QObject *parent)
     , m_context(new QQmlContext(rootContext()))
     , m_component(new QQmlComponent(this))
     , m_todoListModel(new TodoListModel(this))
+    , m_todoListModelCompleted(new TodoListModelProxy(this))
+    , m_todoListModelUnfinished(new TodoListModelProxy(this))
     , m_taskListModel(new TaskListModel(this))
     , m_taskListModelProxy(new TaskListModelProxy(this))
 {
@@ -26,10 +29,16 @@ TadaList::TadaList(QObject *parent)
     qmlRegisterType<TaskListModel>("com.ics.tadalist", 0, 1, "TaskListModel");
     qmlRegisterType<TodoListItem>("com.ics.tadalist", 0, 1, "TodoListItem");
     qmlRegisterType<TodoListModel>("com.ics.tadalist", 0, 1, "TodoListModel");
+    qmlRegisterType<TodoListModelProxy>("com.ics.tadalist", 0, 1, "TodoListModelProxy");
 
+    m_todoListModelCompleted->setTodoListType(TodoListModelProxy::CompletedTodoList);
+    m_todoListModelCompleted->setSourceModel(m_todoListModel);
+    m_todoListModelUnfinished->setTodoListType(TodoListModelProxy::UnfinishedTodoList);
+    m_todoListModelUnfinished->setSourceModel(m_todoListModel);
     m_taskListModelProxy->setSourceModel(m_taskListModel);
 
-    m_context->setContextProperty("todoListModel", m_todoListModel);
+    m_context->setContextProperty("todoListModelCompleted", m_todoListModelCompleted);
+    m_context->setContextProperty("todoListModelUnfinished", m_todoListModelUnfinished);
     m_context->setContextProperty("taskListModelProxy", m_taskListModelProxy);
 
     m_component->loadUrl(QUrl("qrc:///main.qml"));
