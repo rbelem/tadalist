@@ -88,6 +88,11 @@ MouseArea {
             anchors.leftMargin: 10
             anchors.verticalCenter: parent.verticalCenter
             source: "grey_delete.gif"
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: taskListModelProxy.removeItem(index)
+            }
         }
 
         Image {

@@ -35,6 +35,12 @@ void TaskListModelProxy::updateItem(int id, const QVariant &value, int role)
     sourceModel()->setData(itemIndex, value, role);
 }
 
+void TaskListModelProxy::removeItem(int id)
+{
+    QModelIndex itemIndex = index(id, 0);
+    sourceModel()->removeRow(itemIndex.row());
+}
+
 bool TaskListModelProxy::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
     QModelIndex index = sourceModel()->index(source_row, 0, source_parent);

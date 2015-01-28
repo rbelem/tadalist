@@ -90,6 +90,27 @@ bool TaskListModel::setData(const QModelIndex &index, const QVariant &value, int
     return true;
 }
 
+bool TaskListModel::removeRows(int row, int count, const QModelIndex &parent)
+{
+    Q_UNUSED(parent)
+
+    int start = row;
+    int end = row + count - 1;
+
+    if (end < 0 || end >= m_items.count())
+        return false;
+
+    beginRemoveRows(QModelIndex(), start, end);
+
+    for (int i = end; i >= start; --i) {
+        m_items.removeAt(i);
+    }
+
+    endRemoveRows();
+
+    return true;
+}
+
 int TaskListModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)

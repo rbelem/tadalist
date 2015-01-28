@@ -15,6 +15,7 @@ public:
     Q_INVOKABLE void setTodoListId(int id);
     Q_INVOKABLE void addItem();
     Q_INVOKABLE void updateItem(int id, const QVariant &value, int role);
+    Q_INVOKABLE void removeItem(int id);
 
 protected:
     bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
