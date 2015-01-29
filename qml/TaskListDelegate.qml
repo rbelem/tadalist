@@ -57,6 +57,16 @@ MouseArea {
                 PropertyChanges { target: taskNameField; enabled: false; visible: false }
             },
             State {
+                when: checkbox.checked == false
+                PropertyChanges { target: mouseArea; enabled: true}
+                PropertyChanges { target: deleteImage; visible: false  }
+                PropertyChanges { target: dragImage; visible: false  }
+                PropertyChanges { target: checkbox; enabled: true  }
+                PropertyChanges { target: taskNameText; enabled: true; visible: true; font.pixelSize: 16; color: "#000" }
+                PropertyChanges { target: taskNameMouseArea; enabled: true }
+                PropertyChanges { target: taskNameField; enabled: false; visible: false }
+            },
+            State {
                 name: "DragActive"
                 AnchorChanges { target: checkbox; anchors.left: dragImage.right }
 
