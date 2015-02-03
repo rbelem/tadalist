@@ -22,6 +22,11 @@ public:
 public slots:
     void onQuit();
 
+private slots:
+    void onTaskListDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles);
+    void onTaskListRowsInserted(const QModelIndex &parent, int start, int end);
+    void onTaskListRowsRemoved(const QModelIndex &parent, int start, int end);
+
 private:
     QQmlContext *m_context;
     QQmlComponent *m_component;

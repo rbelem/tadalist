@@ -12,6 +12,7 @@ public:
     TaskListModelProxy(QObject *parent = 0);
     TaskListModelProxy(const TaskListModelProxy &other);
 
+    Q_INVOKABLE int todoListId() const;
     Q_INVOKABLE void setTodoListId(int id);
     Q_INVOKABLE void addItem();
     Q_INVOKABLE void updateItem(int id, const QVariant &value, int role);

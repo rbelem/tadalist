@@ -28,7 +28,7 @@ TodoListItem *TodoListModel::addItem()
 
     TodoListItem *item = new TodoListItem(this);
     item->setId(id);
-    item->setBulletSize(0);
+    item->setTasksLeft(0);
     item->setCompleted(false);
     item->setName(QString(QLatin1String("Todo List %1")).arg(id));
     item->setDescription("");
@@ -38,6 +38,18 @@ TodoListItem *TodoListModel::addItem()
     endInsertRows();
 
     return item;
+}
+
+QModelIndex TodoListModel::indexById(int id) const
+{
+    int i;
+    QList<TodoListItem *>::const_iterator itr;
+    for (i = 0, itr = m_items.constBegin(); itr != m_items.constEnd(); ++i, ++itr) {
+        if (id == (*itr)->id())
+            return index(i, 0);
+    }
+
+    return QModelIndex();
 }
 
 QVariant TodoListModel::data(const QModelIndex &index, int role) const
@@ -50,8 +62,8 @@ QVariant TodoListModel::data(const QModelIndex &index, int role) const
     if (role == IdRole)
         return item->id();
 
-    if (role == BulletSizeRole)
-        return item->bulletSize();
+    if (role == TasksLeftRole)
+        return item->tasksLeft();
 
     if (role == CompletedRole)
         return item->completed();
@@ -77,8 +89,8 @@ bool TodoListModel::setData(const QModelIndex &index, const QVariant &value, int
 
     else if (role == IdRole)
         item->setId(value.toInt());
-    else if (role == BulletSizeRole)
-        item->setBulletSize(value.toInt());
+    else if (role == TasksLeftRole)
+        item->setTasksLeft(value.toInt());
     else if (role == CompletedRole)
         item->setCompleted(value.toBool());
     else if (role == TodoListNameRole)
@@ -108,7 +120,7 @@ QHash<int, QByteArray> TodoListModel::roleNames() const
 void TodoListModel::initRoles()
 {
     m_roles[IdRole] = "todoListId";
-    m_roles[BulletSizeRole] = "bulletSize";
+    m_roles[TasksLeftRole] = "tasksLeft";
     m_roles[CompletedRole] = "todoListCompleted";
     m_roles[TodoListNameRole] = "todoListName";
     m_roles[TodoListDescriptionRole] = "todoListDescription";

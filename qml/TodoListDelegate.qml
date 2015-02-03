@@ -46,7 +46,7 @@ Component {
             anchors.left: todoListNameText.right
             anchors.leftMargin: 10
             anchors.verticalCenter: todoListNameText.verticalCenter
-            text: "—  " + "0" + " left"
+            text: "—  " + tasksLeft + " left"
         }
     }
 }

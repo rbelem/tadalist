@@ -13,7 +13,7 @@ class TodoListModel : public QAbstractListModel
 public:
     enum TodoItemRoles {
         IdRole = Qt::UserRole + 1,
-        BulletSizeRole,
+        TasksLeftRole,
         CompletedRole,
         TodoListNameRole,
         TodoListDescriptionRole
@@ -23,6 +23,7 @@ public:
     ~TodoListModel();
 
     TodoListItem *addItem();
+    QModelIndex indexById(int id) const;
 
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);

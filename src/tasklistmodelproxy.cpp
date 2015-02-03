@@ -15,6 +15,11 @@ TaskListModelProxy::TaskListModelProxy(const TaskListModelProxy &other)
 {
 }
 
+int TaskListModelProxy::todoListId() const
+{
+    return m_todoListId;
+}
+
 void TaskListModelProxy::setTodoListId(int id)
 {
     if (id == m_todoListId)

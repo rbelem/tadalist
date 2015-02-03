@@ -45,6 +45,13 @@ TadaList::TadaList(QObject *parent)
     m_component->loadUrl(QUrl("qrc:///main.qml"));
 
     QObject *topLevel = m_component->create(m_context);
+
+    connect(m_taskListModel, &TaskListModel::dataChanged,
+            this, &TadaList::onTaskListDataChanged);
+    connect(m_taskListModel, &TaskListModel::rowsInserted,
+            this, &TadaList::onTaskListRowsInserted);
+    connect(m_taskListModel, &TaskListModel::rowsRemoved,
+            this, &TadaList::onTaskListRowsRemoved);
 }
 
 TadaList::~TadaList()
@@ -54,4 +61,67 @@ TadaList::~TadaList()
 void TadaList::onQuit()
 {
     qCritical() << "onQuit called";
+}
+
+void TadaList::onTaskListDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QVector<int> &roles)
+{
+    QHash<int, int> changedItems;
+
+    int i;
+    for (i = topLeft.row(); i <= bottomRight.row(); ++i) {
+        QModelIndex item = m_taskListModel->index(i, 0);
+        int todoListId = item.data(TaskListModel::TodoListIdRole).toInt();
+        bool taskCompleted = item.data(TaskListModel::CompletedRole).toBool();
+
+        if (!changedItems.contains(todoListId))
+            changedItems.insert(todoListId, 0);
+
+        int count = changedItems.value(todoListId);
+        changedItems.insert(todoListId, taskCompleted ? --count : ++count);
+    }
+
+    QHash<int, int>::const_iterator itr;
+    for (itr = changedItems.constBegin(); itr != changedItems.constEnd(); ++itr) {
+        QModelIndex todoListIndex = m_todoListModel->indexById(itr.key());
+        int currentTasksLeft = m_todoListModel->data(todoListIndex, TodoListModel::TasksLeftRole).toInt();
+        m_todoListModel->setData(todoListIndex, currentTasksLeft + itr.value(), TodoListModel::TasksLeftRole);
+    }
+}
+
+void TadaList::onTaskListRowsInserted(const QModelIndex &parent, int start, int end)
+{
+    QModelIndex startItem = m_taskListModel->index(start, 0);
+    QModelIndex endItem = m_taskListModel->index(end, 0);
+
+    QHash<int, int> removedItems;
+
+    for (int i = start; i <= end; ++i) {
+        QModelIndex item = m_taskListModel->index(i, 0);
+        if (true == item.data(TaskListModel::CompletedRole).toBool())
+            continue;
+
+        int todoListId = item.data(TaskListModel::TodoListIdRole).toInt();
+        if (!removedItems.contains(todoListId)) {
+            removedItems.insert(todoListId, 1);
+        } else {
+            int count = removedItems.value(todoListId);
+            removedItems.insert(todoListId, ++count);
+        }
+    }
+
+    QHash<int, int>::const_iterator itr;
+    for (itr = removedItems.constBegin(); itr != removedItems.constEnd(); ++itr) {
+        QModelIndex todoListIndex = m_todoListModel->indexById(itr.key());
+        int currentTasksLeft = m_todoListModel->data(todoListIndex, TodoListModel::TasksLeftRole).toInt();
+        m_todoListModel->setData(todoListIndex, currentTasksLeft + itr.value(), TodoListModel::TasksLeftRole);
+    }
+}
+
+void TadaList::onTaskListRowsRemoved(const QModelIndex &parent, int start, int end)
+{
+    int removedItems = end - start + 1;
+    QModelIndex todoListIndex = m_todoListModel->indexById(m_taskListModelProxy->todoListId());
+    int currentTasksLeft = m_todoListModel->data(todoListIndex, TodoListModel::TasksLeftRole).toInt();
+
+    m_todoListModel->setData(todoListIndex, currentTasksLeft - removedItems, TodoListModel::TasksLeftRole);
 }

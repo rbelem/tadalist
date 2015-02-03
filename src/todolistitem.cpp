@@ -3,7 +3,7 @@
 TodoListItem::TodoListItem(QObject *parent)
     : QObject(parent)
     , m_id(-1)
-    , m_bulletSize(-1)
+    , m_tasksLeft(-1)
     , m_completed(false)
     , m_name()
     , m_description()
@@ -13,7 +13,7 @@ TodoListItem::TodoListItem(QObject *parent)
 TodoListItem::TodoListItem(TodoListItem *item, QObject *parent)
     : QObject(parent)
     , m_id(item->id())
-    , m_bulletSize(item->bulletSize())
+    , m_tasksLeft(item->tasksLeft())
     , m_completed(item->completed())
     , m_name(item->name())
     , m_description(item->description())
@@ -30,14 +30,14 @@ void TodoListItem::setId(int id)
     emit idChanged();
 }
 
-void TodoListItem::setBulletSize(int id)
+void TodoListItem::setTasksLeft(int tasks)
 {
-    if (m_bulletSize == id)
+    if (m_tasksLeft == tasks)
         return;
 
-    m_bulletSize = id;
+    m_tasksLeft = tasks;
 
-    emit bulletSizeChanged();
+    emit tasksLeftChanged();
 }
 
 void TodoListItem::setCompleted(bool completed)
