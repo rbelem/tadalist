@@ -87,6 +87,9 @@ bool TodoListModel::setData(const QModelIndex &index, const QVariant &value, int
     if (item == NULL)
         return false;
 
+    QVector<int> changedRoles;
+    changedRoles.append(role);
+
     if (role == IdRole)
         item->setId(value.toInt());
     else if (role == TasksLeftRole)
@@ -100,7 +103,7 @@ bool TodoListModel::setData(const QModelIndex &index, const QVariant &value, int
     else
         return false;
 
-    emit dataChanged(index, index);
+    emit dataChanged(index, index, changedRoles);
 
     return true;
 }
