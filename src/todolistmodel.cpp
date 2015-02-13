@@ -87,7 +87,7 @@ bool TodoListModel::setData(const QModelIndex &index, const QVariant &value, int
     if (item == NULL)
         return false;
 
-    else if (role == IdRole)
+    if (role == IdRole)
         item->setId(value.toInt());
     else if (role == TasksLeftRole)
         item->setTasksLeft(value.toInt());
