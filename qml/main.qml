@@ -197,6 +197,11 @@ ApplicationWindow {
                 anchors.leftMargin: 5
                 text: qsTr("Todo List Name")
                 font.pixelSize: 23
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: todoListToolBar.state = "taskListScreenNameEdit"
+                }
             }
 
             Text {
