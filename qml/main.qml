@@ -179,7 +179,7 @@ ApplicationWindow {
                 font.pixelSize: 23
 
                 onEditingFinished: {
-                    todoListModelUnfinished.updateItem(todoListToolBar.currentTodoListId, TodoListModel.TodoListNameRole, text)
+                    todoListModelUnfinished.updateItem(todoListToolBar.currentTodoListId, text, TodoListModel.TodoListNameRole)
                     todoListTextId.text = text
 
                     var str = descriptionText.text
@@ -323,7 +323,7 @@ ApplicationWindow {
 
             Keys.onPressed: {
                 if ((Qt.Key_Escape === event.key) || ((Qt.Key_Return === event.key) && (event.modifiers === 0))) {
-                    todoListModel.updateItem(todoListToolBar.currentTodoListId, TodoListModel.TodoListDescriptionRole, text)
+                    todoListModelUnfinished.updateItem(todoListToolBar.currentTodoListId, text, TodoListModel.TodoListDescriptionRole)
                     descriptionText.text = text
 
                     var str = text
